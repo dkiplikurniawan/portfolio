@@ -6,10 +6,11 @@
    - CDN unavailable        → plain-JS fallback; nothing is hidden.
    ========================================================================== */
 
-// Form delivery: FormSubmit.co AJAX endpoint. It emails each submission to the address below and
-// answers with JSON, so the page only says "sent" when delivery is confirmed.
-// One-time setup: the first submission triggers an "Activate Form" email to this inbox — click it once.
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/dkiplikurniawan@gmail.com';
+// Form delivery: Web3Forms (https://web3forms.com). It emails each submission to the inbox the
+// access key was created for and answers with JSON, so the page only says "sent" when delivery is confirmed.
+// The access key is public by design (it can only send to that inbox).
+const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+const FORM_ACCESS_KEY = '074b9548-23c2-43d9-ab7a-a7d9ce9338db';
 const CONTACT_EMAIL = 'dkiplikurniawan@gmail.com';
 const SUBMIT_TIMEOUT_MS = 15000;
 
@@ -398,7 +399,7 @@ function el(tag, text, attrs = {}) {
 function showStatus(state, nodes) { const box = $('#form-status'); box.dataset.state = state; box.replaceChildren(...nodes); }
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/** Returns { ok, info }. ok is true only when FormSubmit confirms the email was accepted. */
+/** Returns { ok, info }. ok is true only when Web3Forms confirms the email was accepted. */
 async function sendMessage(payload) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
@@ -407,22 +408,23 @@ async function sendMessage(payload) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
+        access_key: FORM_ACCESS_KEY,
+        subject: `[Portfolio] ${payload.classification} — ${payload.name}`,
+        from_name: 'Portfolio contact form',
+        replyto: payload.email,
         name: payload.name,
         email: payload.email,
         topic: payload.classification,
         message: payload.message,
-        _subject: `[Portfolio] ${payload.classification} — ${payload.name}`,
-        _replyto: payload.email,
-        _template: 'table',
-        _captcha: 'false',
       }),
       signal: controller.signal,
     });
     const data = await res.json().catch(() => ({}));
-    const ok = res.ok && String(data.success) === 'true';
+    const ok = res.ok && (data.success === true || String(data.success) === 'true');
     if (!ok) console.info('[portfolio] form service replied:', data.message || res.status);
     return { ok, info: data.message || '' };
   } catch (err) {
+    console.info('[portfolio] form service unreachable:', String(err));
     return { ok: false, info: String(err) };
   } finally { clearTimeout(timer); }
 }
@@ -448,7 +450,7 @@ function initContactForm() {
     button.setAttribute('aria-busy', 'true');
     label.textContent = 'Sending';
     showStatus('pending', [el('span', 'Sending your message…')]);
-    const [{ ok, info }] = await Promise.all([sendMessage(payload), wait(Motion.reduced ? 0 : 1100)]); // let the flight animation play
+    const [{ ok }] = await Promise.all([sendMessage(payload), wait(Motion.reduced ? 0 : 1100)]); // let the flight animation play
 
     button.removeAttribute('aria-busy');
     if (ok) {
@@ -470,7 +472,7 @@ function initContactForm() {
       const links = composeLinks(payload);
       showStatus('error', [
         el('strong', "The message couldn't be delivered."),
-        document.createTextNode(/activat/i.test(info) ? ' The contact form is being set up. Please send it by email for now: ' : ' Check your connection and try again, or send it by email: '),
+        document.createTextNode(' Check your connection and try again, or send it by email: '),
         el('a', 'open in your email app', { href: links.mailto }),
         document.createTextNode(' or '),
         el('a', 'open in Gmail', { href: links.gmail, target: '_blank', rel: 'noopener' }),
