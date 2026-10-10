@@ -1,847 +1,613 @@
 <!DOCTYPE html>
-<html class="light scroll-smooth" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Dul Kipli Kurniawan — Portfolio</title>
-  
-  <!-- Fonts & Icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#FBF9F5"/>
+  <title>Dul Kipli Kurniawan — AI, Computer Vision &amp; Assistive Technology</title>
+  <meta name="description" content="Portfolio of Dul Kipli Kurniawan: AI and data science developer working on computer vision, Flutter mobile apps and assistive technology for Indonesian Sign Language (BISINDO)."/>
+  <link rel="canonical" href="https://dkiplikurniawan.github.io/portfolio/"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="author" content="Dul Kipli Kurniawan"/>
+  <meta property="og:type" content="profile"/>
+  <meta property="og:title" content="Dul Kipli Kurniawan — AI, Computer Vision & Assistive Technology"/>
+  <meta property="og:description" content="Assistive AI, Flutter mobile apps and data science. Featured project: DEAFSAPP, a BISINDO sign-language app (LIDM 2023 national finalist)."/>
+  <meta property="og:url" content="https://dkiplikurniawan.github.io/portfolio/"/>
+  <meta property="og:image" content="https://dkiplikurniawan.github.io/portfolio/assets/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+
+  <!-- Motion bootstrap. Nothing is hidden by CSS alone: GSAP sets start states when it runs.
+       The intro curtain only exists while JS runs, and is removed after 2.5 s if motion never starts. -->
+  <script>
+    document.documentElement.classList.add('js');
+    try { if (sessionStorage.getItem('dk-intro-seen')) document.documentElement.classList.add('intro-seen'); } catch (e) {}
+    setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.add('no-motion'); }, 2500);
+  </script>
+
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
-  <!-- External Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            surface: "#FBF9F5",
-            "surface-subtle": "#F5F3EF",
-            "dark-base": "#0c0d0e",
-            "dark-surface": "#121316",
-            "dark-elevated": "#1a1b1e",
-            "hairline-light": "rgba(0,0,0,0.06)",
-            "hairline-dark": "rgba(255,255,255,0.08)",
+            surface: "#FBF9F5", "surface-subtle": "#F5F3EF",
+            "dark-base": "#0c0d0e", "dark-surface": "#121316", "dark-elevated": "#1a1b1e",
+            "hairline-light": "rgba(0,0,0,0.08)", "hairline-dark": "rgba(255,255,255,0.1)",
             charcoal: "#18181B"
           },
-          fontFamily: {
-            headline: ["Outfit", "sans-serif"],
-            body: ["Hanken Grotesk", "sans-serif"],
-            serif: ["Cormorant Garamond", "serif"]
-          },
+          fontFamily: { headline: ["Outfit", "sans-serif"], body: ["Hanken Grotesk", "sans-serif"], serif: ["Cormorant Garamond", "serif"] },
           maxWidth: { container: "1280px" }
         }
       }
     };
   </script>
-
-  <!-- External JavaScript -->
+  <!-- Scroll engine: GSAP (ScrollTrigger, SplitText) + Lenis smooth scrolling. Pinned versions. -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.21/dist/lenis.min.js" defer></script>
   <script src="script.js" defer></script>
 </head>
-<body class="bg-surface font-body text-charcoal antialiased selection:bg-neutral-900 selection:text-white min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="bg-surface font-body text-charcoal antialiased min-h-screen flex flex-col overflow-x-hidden">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- 1. FROSTED NAVBAR -->
-<header id="navbar" class="w-full sticky top-0 z-50 apple-glass border-b border-hairline-light transition-all duration-300">
-  <div id="navbar-container" class="max-w-container mx-auto px-6 sm:px-10 h-20 flex items-center justify-between transition-all duration-300">
-    <a class="flex items-center gap-3 group rounded-full p-1 focus-visible:ring-2" href="#">
-      <span class="w-9 h-9 rounded-full bg-neutral-900 text-white flex items-center justify-center font-headline text-xs font-semibold tracking-wider transition-transform duration-300 group-hover:scale-105 shadow-sm">DK</span>
-      <div class="flex flex-col">
-        <span class="tracking-tight text-[14px] font-semibold text-neutral-900 leading-tight">Dul Kipli Kurniawan</span>
-        <span class="text-[10px] text-neutral-500 font-medium tracking-wide">Assistive UX & AI</span>
-      </div>
+<!-- Intro (once per browser session, skipped with reduced motion) -->
+<div class="curtain">
+  <div class="intro-stage">
+    <svg class="intro-lens" viewBox="0 0 64 64" aria-hidden="true"><circle class="lens-ring" cx="32" cy="32" r="26" pathLength="1"/><circle class="lens-dot" cx="40" cy="24" r="4.5"/></svg>
+    <svg class="intro-name" viewBox="0 0 1000 400" aria-hidden="true">
+      <text class="intro-word" x="500" y="182" text-anchor="middle">DUL KIPLI</text>
+      <text class="intro-word" x="500" y="384" text-anchor="middle">KURNIAWAN</text>
+    </svg>
+    <p class="intro-tag" aria-hidden="true"><span>AI &amp; Assistive Technology</span></p>
+  </div>
+  <button class="intro-skip" type="button">Skip intro <span aria-hidden="true">→</span></button>
+</div>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+<!-- ============================ HEADER ============================ -->
+<header id="navbar" class="site-header">
+  <div class="max-w-container mx-auto px-5 sm:px-10 h-20 flex items-center justify-between gap-4">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">DK</span>
+      <span class="flex flex-col leading-tight">
+        <span class="text-[14px] font-semibold text-neutral-900">Dul Kipli Kurniawan</span>
+        <span class="text-[11px] text-neutral-500 font-medium">AI &amp; Assistive Technology</span>
+      </span>
     </a>
-    <nav class="hidden md:flex items-center gap-7 lg:gap-9 text-[13px] font-medium text-neutral-600">
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#about">About</a>
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#deafsapp">DEAFSAPP</a>
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#latest-project">SUCARE</a>
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#other-work">Work</a>
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#skills">Skills</a>
-      <a class="hover:text-neutral-950 transition-colors rounded-md px-1 py-0.5 focus-visible:ring-2" href="#contact">Contact</a>
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="nav-list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#deafsapp">DEAFSAPP</a></li>
+        <li><a href="#voldo">VOLDO</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
-    <div class="flex items-center">
-      <a class="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-neutral-950 text-white text-[12px] sm:text-[13px] font-medium hover:bg-black hover:shadow-lg transition-all active:scale-95 focus-visible:ring-2" href="#contact">
-        <span>Inquire Collaboration</span>
-        <span class="text-xs">↗</span>
-      </a>
+    <div class="flex items-center gap-2">
+      <a class="btn btn-dark hidden sm:inline-flex" href="#contact">Let's talk <span class="btn-arrow" aria-hidden="true">↗</span></a>
+      <button id="menu-toggle" type="button" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="sr-only">Menu</span>
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span></span>
+      </button>
     </div>
   </div>
+  <nav id="mobile-menu" aria-label="Primary mobile" class="mobile-menu lg:hidden" hidden>
+    <ul class="max-w-container mx-auto px-5 py-4 grid gap-1">
+      <li><a href="#about">About</a></li>
+      <li><a href="#deafsapp">DEAFSAPP</a></li>
+      <li><a href="#voldo">VOLDO</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="assets/CV_DUL%20KIPLI%20KURNIAWAN.pdf">Download CV (PDF)</a></li>
+    </ul>
+  </nav>
 </header>
 
-<main class="w-full flex-1 relative">
-  <!-- 2. HERO SECTION -->
-  <section id="hero-section" class="relative w-full min-h-[calc(100vh-5rem)] flex items-center pt-8 pb-16 lg:py-20 bg-surface transition-all duration-500">
-    <div class="max-w-container mx-auto px-6 sm:px-10 w-full" id="hero-content">
-      <div class="hero-reveal flex flex-wrap items-center gap-2.5 sm:gap-3.5 mb-10 sm:mb-12" style="transition-delay: 0ms;">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-neutral-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
-          <span class="w-1.5 h-1.5 rounded-full bg-neutral-900"></span>
-          <span class="text-[12px] font-semibold text-neutral-900 font-headline">3.70</span>
-          <span class="text-[11px] text-neutral-500 font-medium">GPA Cum Laude · UMSU</span>
-        </div>
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-neutral-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
-          <span class="material-symbols-outlined text-[14px] text-amber-600">emoji_events</span>
-          <span class="text-[12px] font-semibold text-neutral-900 font-headline">LIDM 2023</span>
-          <span class="text-[11px] text-neutral-500 font-medium">National Finalist</span>
-        </div>
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-neutral-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-          <span class="text-[12px] font-semibold text-neutral-900 font-headline">76.1%</span>
-          <span class="text-[11px] text-neutral-500 font-medium">BISINDO Recognition</span>
-        </div>
-      </div>
+<main id="main" class="w-full flex-1">
+
+  <!-- ============================ HERO ============================ -->
+  <section id="top" class="hero" aria-labelledby="hero-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10 w-full">
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-        <div class="lg:col-span-7 flex flex-col justify-center space-y-6 lg:space-y-8">
-          <div class="hero-reveal space-y-3" style="transition-delay: 120ms;">
-            <span class="text-[11px] font-semibold tracking-[0.2em] uppercase text-neutral-400 font-headline">Assistive Systems & Spatial UX</span>
-            <h1 class="font-serif text-[76px] sm:text-[104px] lg:text-[120px] font-normal leading-[0.88] tracking-[-0.03em] text-neutral-950">Hello.</h1>
-          </div>
-
-          <div class="hero-reveal space-y-4 max-w-xl" style="transition-delay: 240ms;">
-            <p class="text-[19px] sm:text-[22px] font-semibold text-neutral-900 tracking-tight leading-snug font-headline">
-              — I'm Dul Kipli Kurniawan, AI & Assistive UX Developer
-            </p>
-            <p class="text-[15px] sm:text-[16px] text-neutral-600 leading-relaxed font-normal">
-              Building privacy-preserving AI and augmented reality solutions for Indonesian Sign Language (BISINDO) — National Finalist, LIDM 2023.
-            </p>
-          </div>
-
-          <div class="hero-reveal pt-2 flex items-center gap-4 flex-wrap" style="transition-delay: 360ms;">
-            <a class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-neutral-950 text-white text-[13px] font-medium hover:bg-neutral-800 transition-all shadow-md active:scale-95 focus-visible:ring-2" href="#deafsapp">
-              <span>Explore DEAFSAPP</span><span class="text-sm">↗</span>
+        <div class="lg:col-span-7 hero-copy-col order-2 lg:order-1">
+          <ul class="hero-badges" aria-label="Highlights" data-hero="badges">
+            <li><span class="dot" aria-hidden="true"></span><strong>3.70</strong> GPA, cum laude · UMSU</li>
+            <li><span class="dot dot-amber" aria-hidden="true"></span><strong>LIDM 2023</strong> National Finalist</li>
+            <li><span class="dot dot-em" aria-hidden="true"></span><strong>IBM</strong> AI Engineering &amp; Data Science</li>
+          </ul>
+          <p class="eyebrow" data-hero="eyebrow">AI, computer vision &amp; assistive systems</p>
+          <h1 id="hero-title" class="sr-only">Dul Kipli Kurniawan — AI &amp; Assistive Technology Developer</h1>
+          <p class="hero-hello" aria-hidden="true" data-hero="hello">Hello.</p>
+          <p class="hero-intro" data-hero="intro">— I'm Dul Kipli Kurniawan, AI &amp; Assistive Technology Developer</p>
+          <p class="hero-desc" data-hero="desc">I build computer-vision and mobile tools for Indonesian Sign Language (BISINDO). My thesis project DEAFSAPP reached the national finals of LIDM 2023; today I work across AI engineering, data science and product design.</p>
+          <div class="hero-ctas" data-hero="ctas">
+            <a class="btn btn-dark btn-lg" data-magnetic href="#deafsapp">Explore DEAFSAPP <span class="btn-arrow" aria-hidden="true">↗</span></a>
+            <a class="btn btn-light btn-lg" data-magnetic href="assets/CV_DUL%20KIPLI%20KURNIAWAN.pdf">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+              Download CV (PDF)
             </a>
-            
-            <!-- Link Download CV Hero -->
-            <a class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white border border-neutral-300 text-neutral-900 text-[13px] font-medium hover:border-neutral-500 hover:bg-neutral-50 transition-all shadow-sm active:scale-95 focus-visible:ring-2" 
-               href="assets/CV_Dul_Kipli_Kurniawan.pdf" 
-               download="CV_Dul_Kipli_Kurniawan.pdf" 
-               target="_blank">
-              <span class="material-symbols-outlined text-[16px] text-neutral-700">download</span>
-              <span>Download CV (PDF)</span>
-            </a>
-
-            <a class="inline-flex items-center gap-1.5 px-5 py-3.5 rounded-full bg-transparent text-neutral-600 text-[13px] font-medium hover:text-neutral-950 transition-all focus-visible:ring-2" href="#about">
-              <span>Background</span><span class="text-xs">↓</span>
-            </a>
-          </div>
-
-          <div class="pt-6 hidden sm:flex items-center gap-2 text-[11px] text-neutral-400 uppercase tracking-widest font-medium font-headline">
-            <span class="w-2 h-2 rounded-full bg-neutral-300"></span>
-            <span>Scroll to explore hardware-free assistive engineering</span>
+            <a class="btn-link" href="#about">Background <span aria-hidden="true">↓</span></a>
           </div>
         </div>
 
-        <div class="hero-reveal lg:col-span-5 flex justify-center lg:justify-end" style="transition-delay: 480ms;">
-          <div id="hero-portrait-frame" class="relative w-full max-w-[430px] aspect-[3/4] rounded-[36px] overflow-hidden bg-neutral-100 border border-black/5 shadow-[0_25px_60px_rgba(0,0,0,0.12)] group transition-transform duration-200 ease-out">
-            <img alt="Dul Kipli Kurniawan" class="w-full h-full object-cover object-top filter grayscale contrast-[1.04] transition-all duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCeXFqIoOVhCubS_Yf05Pf_UwKVmdG_vhCMuQJ9-ibQ6dgq_Qg9OtI5mZKV6mHGk92QI1SS5msg7odq7F0OTBAlznlwdorIMEYcewurHpPcrloZPXcHaMneMpM5PoaJ6TZuPCvVFnnIvGwWx_Hido_dI68INaIItL1SWFwfJVHpeCeUtMbdms9-HnJr3iL8WfWHDFuLCJxM3JXMfeaR2s-54KCuDg4aE7AegDQqK44GzvzY1j-zpmrW2ywiWpxHlCTlIRiz1ullquJuhw"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
-            <div class="absolute bottom-5 left-5 right-5 p-3.5 rounded-2xl apple-glass-dark border border-white/10 text-white shadow-xl flex items-center justify-between">
-              <div class="space-y-0.5">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  <span class="text-[13px] font-semibold tracking-tight text-white font-headline">Dul Kipli Kurniawan, S.Kom</span>
-                </div>
-                <p class="text-[10px] text-neutral-400 tracking-wide pl-3.5">AI & Assistive UX Developer</p>
-              </div>
-              <span class="px-2.5 py-1 rounded-full bg-white/15 text-[9px] font-bold tracking-widest uppercase text-neutral-200 font-headline border border-white/10">B.COMP.SC · UMSU</span>
+        <div class="lg:col-span-5 flex justify-center lg:justify-end order-1 lg:order-2">
+          <figure class="portrait" data-hero="portrait">
+            <div class="portrait-media">
+              <img src="assets/profile-800.webp" srcset="assets/profile-480.webp 480w, assets/profile-800.webp 800w" sizes="(min-width: 1024px) 430px, (min-width: 640px) 380px, 86vw" width="800" height="1192" fetchpriority="high" alt="Portrait of Dul Kipli Kurniawan wearing glasses, a dark suit and tie, in front of a grey background."/>
             </div>
+            <figcaption class="portrait-tag">
+              <span>
+                <span class="portrait-name"><span class="dot dot-em" aria-hidden="true"></span>Dul Kipli Kurniawan, S.Kom</span>
+                <span class="portrait-role">AI &amp; Assistive Technology Developer</span>
+              </span>
+              <span class="portrait-chip">S.Kom · UMSU</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#about" data-hero="cue"><span class="scroll-cue-line" aria-hidden="true"></span>Scroll to explore</a>
+    </div>
+  </section>
+
+  <!-- ============================ ABOUT (editorial split, photo bleeds to the edge) ============================ -->
+  <section id="about" class="about-split" aria-labelledby="about-title">
+    <figure class="about-photo" data-about-photo>
+      <div class="about-photo-inner">
+        <img src="assets/me-1200.webp" srcset="assets/me-700.webp 700w, assets/me-1200.webp 1200w" sizes="(min-width: 1024px) 50vw, 100vw" width="1200" height="1803" loading="lazy" decoding="async" alt="Black-and-white editorial photo of Dul Kipli Kurniawan in a dark suit, reclining on a tubular steel chair with an open magazine resting over his face."/>
+      </div>
+      <p class="about-overlay" aria-hidden="true"><span>Beyond</span><span>the code</span></p>
+    </figure>
+    <div class="about-copy">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title" class="about-title" data-scrub-words>Building assistive AI that listens with its eyes, and proving it works with honest evaluation.</h2>
+      <div class="about-text" data-stagger>
+        <p data-fade>I studied Information Systems at Universitas Muhammadiyah Sumatera Utara (UMSU) and have worked across UI/UX design, Flutter development and AI application development. My thesis on BISINDO sign-language technology at SLB Melati Aisyah taught me that an accessible tool depends as much on careful evaluation as on working code.</p>
+        <p data-fade>In 2026 I completed the IBM AI Engineering and IBM Data Science professional certificates and built a reproducible forecasting project. I am looking for AI, computer vision or mobile engineering roles, and for a master's programme in Data Science, AI or Computer Science.</p>
+        <dl class="mini-facts" data-fade>
+          <div><dt>Education</dt><dd>S.Kom, Information Systems, UMSU · Oct 2019 – Aug 2023 · GPA 3.70 / 4.00, cum laude</dd></div>
+          <div><dt>Languages</dt><dd>Indonesian (native) · English, IELTS overall 5.5</dd></div>
+          <div><dt>Based in</dt><dd>Medan, North Sumatra, Indonesia</dd></div>
+        </dl>
+        <a class="text-link" data-fade href="assets/CV_DUL%20KIPLI%20KURNIAWAN.pdf">Read the full CV <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ DEAFSAPP (light, airy) ============================ -->
+  <section id="deafsapp" class="ds" aria-labelledby="deafsapp-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10">
+      <div class="ds-head">
+        <div>
+          <p class="eyebrow">Featured project</p>
+          <h2 id="deafsapp-title" class="ds-title" data-split-lines>DEAFSAPP</h2>
+        </div>
+        <p class="ds-lead" data-fade>A Flutter app for learning and communicating in Indonesian Sign Language (BISINDO), made with Deaf students and their teachers at SLB Melati Aisyah, Medan.</p>
+      </div>
+
+      <dl class="ds-meta" data-stagger>
+        <div data-fade><dt>Role</dt><dd>Lead software developer, team project</dd></div>
+        <div data-fade><dt>Context</dt><dd>Undergraduate thesis, 2022–2023</dd></div>
+        <div data-fade><dt>Recognition</dt><dd>National finalist, LIDM 2023</dd></div>
+        <div data-fade><dt>Copyright</dt><dd>Hak Cipta EC00202341333, DJKI</dd></div>
+      </dl>
+
+      <div class="ds-problem" data-fade>
+        <p class="eyebrow">The problem</p>
+        <p>Deaf and hard-of-hearing students and their hearing teachers had few practical BISINDO tools that run on an ordinary smartphone without sensor gloves. The 2023 recognition model and AR code were lost; the surviving V1 Flutter code is <a href="https://github.com/dkiplikurniawan/DEAFSAPP-V1" rel="noopener">public on GitHub</a>.</p>
+      </div>
+
+      <div class="ds-flow pipeline" id="pipeline" data-active-stage="0">
+        <div class="ds-gallery" data-gallery aria-label="DEAFSAPP in the field: photos from the partner school and the LIDM 2023 national finals" role="region">
+          <div class="g-stack" tabindex="0" aria-label="Photo gallery, scroll sideways on small screens">
+            <figure class="g-slide" data-i="0">
+              <img src="assets/deafsapp-field-4-1100.webp" srcset="assets/deafsapp-field-4-640.webp 640w, assets/deafsapp-field-4-1100.webp 1100w" sizes="(min-width: 1024px) 45vw, 82vw" width="1100" height="825" loading="lazy" decoding="async" style="object-position: 60% 50%" alt="A session with students at the partner school: three students at a desk with a laptop and printed forms."/>
+              <figcaption><span class="g-idx">01</span>Working with students at the school</figcaption>
+            </figure>
+            <figure class="g-slide" data-i="1">
+              <img src="assets/deafsapp-field-3-1100.webp" srcset="assets/deafsapp-field-3-640.webp 640w, assets/deafsapp-field-3-1100.webp 1100w" sizes="(min-width: 1024px) 45vw, 82vw" width="1100" height="825" loading="lazy" decoding="async" style="object-position: 50% 55%" alt="Group photo of the UMSU team with students and teachers in front of the partner school."/>
+              <figcaption><span class="g-idx">02</span>With students and teachers at the partner school</figcaption>
+            </figure>
+            <figure class="g-slide" data-i="2">
+              <img src="assets/deafsapp-field-2-1100.webp" srcset="assets/deafsapp-field-2-640.webp 640w, assets/deafsapp-field-2-1100.webp 1100w" sizes="(min-width: 1024px) 45vw, 82vw" width="1100" height="1467" loading="lazy" decoding="async" style="object-position: 50% 35%" alt="Two UMSU team members in blue university jackets, seen from behind, looking at exhibition posters."/>
+              <figcaption><span class="g-idx">03</span>The UMSU team at the national finals</figcaption>
+            </figure>
+            <figure class="g-slide" data-i="3">
+              <img src="assets/deafsapp-field-1-1100.webp" srcset="assets/deafsapp-field-1-640.webp 640w, assets/deafsapp-field-1-1100.webp 1100w" sizes="(min-width: 1024px) 45vw, 82vw" width="1100" height="1467" loading="lazy" decoding="async" style="object-position: 50% 72%" alt="The team and LIDM organisers on stage in front of the Lomba Inovasi Digital Mahasiswa backdrop."/>
+              <figcaption><span class="g-idx">04</span>LIDM 2023 national finals, Universitas Pendidikan Indonesia</figcaption>
+            </figure>
+            <figure class="g-slide" data-i="4">
+              <img src="assets/deafsapp-field-5-1100.webp" srcset="assets/deafsapp-field-5-640.webp 640w, assets/deafsapp-field-5-1100.webp 1100w" sizes="(min-width: 1024px) 45vw, 82vw" width="1100" height="1465" loading="lazy" decoding="async" style="object-position: 50% 70%" alt="Three team members in front of the LIDM banner reading Universitas Pendidikan Indonesia, Bandung, 4–6 July 2023."/>
+              <figcaption><span class="g-idx">05</span>Bandung, 4–6 July 2023</figcaption>
+            </figure>
+          </div>
+          <div class="g-meta" aria-hidden="true">
+            <span class="g-count"><span class="g-cur">01</span> / 05</span>
+            <span class="g-bar"><span></span></span>
+            <span class="g-label">In the field</span>
+          </div>
+        </div>
+        <ol class="ds-steps stages" aria-label="DEAFSAPP pipeline stages">
+          <li class="stage" data-stage="1">
+            <span class="ds-step-num" aria-hidden="true">1.</span>
+            <div>
+              <h3>Camera input</h3>
+              <p>The phone's camera records a person signing. No gloves or sensors: the goal was an ordinary smartphone.</p>
+              <p class="ds-ev"><span class="ev ev-reported">Reported in thesis</span> The public V1 code does not access the camera.</p>
+            </div>
+          </li>
+          <li class="stage" data-stage="2">
+            <span class="ds-step-num" aria-hidden="true">2.</span>
+            <div>
+              <h3>Landmark extraction</h3>
+              <p>Each frame is reduced to MediaPipe hand and pose landmarks: a few dozen coordinates instead of a full image, so the model needs far less data and computation.</p>
+              <p class="ds-ev"><span class="ev ev-reported">Reported in thesis</span></p>
+            </div>
+          </li>
+          <li class="stage" data-stage="3">
+            <span class="ds-step-num" aria-hidden="true">3.</span>
+            <div>
+              <h3>Temporal processing &amp; gesture recognition</h3>
+              <p>Landmark sequences over time are classified as one of <strong>26 dynamic BISINDO signs</strong>. The test split and signer independence are undocumented, so the reported accuracy is not a measure of performance on new signers.</p>
+              <p class="ds-ev"><span class="ev ev-reported">Reported in thesis</span></p>
+            </div>
+          </li>
+          <li class="stage" data-stage="4">
+            <span class="ds-step-num" aria-hidden="true">4.</span>
+            <div>
+              <h3>Accessible output &amp; feedback</h3>
+              <p>Recognised signs become text and speech. In the other direction, a hearing person's speech is transcribed live on screen. AR sign visualisation was part of the thesis design.</p>
+              <p class="ds-ev"><span class="ev ev-done">In public code</span> speech-to-text <span class="ev ev-reported">Reported in thesis</span> text &amp; speech output <span class="ev ev-placeholder">Placeholder</span> AR screen</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="ds-numbers">
+        <div class="ds-numbers-head" data-fade><p class="eyebrow">Reported results</p><p>From the 2023 thesis. The evaluation data is not public.</p></div>
+        <div class="ds-number" data-fade><p class="ds-value"><span class="odo" data-count="76.1">76.1</span><span class="ds-unit">%</span></p><p class="ds-label">Recognition accuracy</p><p class="ds-note">26 dynamic sign sequences</p></div>
+        <div class="ds-number" data-fade><p class="ds-value"><span class="odo" data-count="76.5">76.5</span></p><p class="ds-label">Usability score</p><p class="ds-note">Instrument (SUS or % positive) being confirmed</p></div>
+        <div class="ds-number" data-fade><p class="ds-value"><span class="odo" data-count="17">17</span><span class="ds-plus">+</span><span class="odo" data-count="8">8</span></p><p class="ds-label">Field-test participants</p><p class="ds-note">Students + teachers, one school</p></div>
+        <div class="ds-number" data-fade><p class="ds-value ds-word">Finalist</p><p class="ds-label">LIDM 2023, national level</p><p class="ds-note">Puspresnas, Kemendikbudristek</p></div>
+      </div>
+
+      <div class="ds-links" data-fade>
+        <a class="btn btn-dark btn-lg" href="deafsapp.html">Read the full case study <span class="btn-arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-light btn-lg" href="https://github.com/dkiplikurniawan/DEAFSAPP-V1" rel="noopener">V1 source on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ VOLDO 3D ============================ -->
+  <section id="voldo" class="voldo" aria-labelledby="voldo-title">
+    <div class="voldo-glow" aria-hidden="true"></div>
+    <div class="max-w-container mx-auto px-5 sm:px-10 relative">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-hairline-dark">
+        <div class="max-w-3xl">
+          <p class="status-line" data-fade><span class="ping" aria-hidden="true"></span>Latest project · Design in progress (Figma)</p>
+          <h2 id="voldo-title" class="display-title mt-4" data-split-lines>VOLDO</h2>
+          <p class="display-sub" data-fade>A volunteer and social-impact app, formerly SUCARE</p>
+          <p class="voldo-copy" data-fade>Three roles (volunteer, donor, organiser) plus an admin panel across 80+ Figma screens, designed to make grassroots programmes easier to find and join. A design project, not a built app.</p>
+          <ul class="tag-row" data-fade><li>Figma</li><li>UI/UX design</li><li>Design system</li><li>Role-based flows</li></ul>
+        </div>
+      </div>
+
+      <div class="phone-stage" data-phones>
+        <div class="phone-rig">
+          <figure class="phone phone-left"><div class="phone-screen"><span class="island" aria-hidden="true"></span><img src="assets/voldo-home.webp" width="360" height="1309" loading="lazy" alt="VOLDO home screen: greeting, search bar, category filters, and a recommended volunteer programme card with an SDG 4 tag."/></div></figure>
+          <figure class="phone phone-center"><div class="phone-screen"><span class="island" aria-hidden="true"></span><img src="assets/voldo-feed.webp" width="360" height="1987" loading="lazy" alt="VOLDO community feed: weekly impact summary, a featured volunteer story and recent stories."/></div></figure>
+          <figure class="phone phone-right"><div class="phone-screen"><span class="island" aria-hidden="true"></span><img src="assets/voldo-story-detail.webp" width="360" height="2363" loading="lazy" alt="VOLDO story detail screen with an article layout, photos and comments."/></div></figure>
+        </div>
+        <div class="phone-floor" aria-hidden="true"></div>
+      </div>
+
+      <ol class="flow-cards" data-stagger>
+        <li data-fade><span>01 · Home &amp; discovery</span><h3>Find a programme</h3><p>Category filters, search and recommended programmes with SDG tags.</p></li>
+        <li data-fade><span>02 · Community feed</span><h3>See the impact</h3><p>Weekly impact summary, featured stories and quick updates from the community.</p></li>
+        <li data-fade><span>03 · Story detail</span><h3>Read one story</h3><p>Editorial layout with photos, impact figures and comments.</p></li>
+      </ol>
+      <p class="fine-print">Screens are Figma exports; names and figures shown in them are sample content.</p>
+    </div>
+  </section>
+
+  <!-- ============================ SELECTED WORK (numbered list) ============================ -->
+  <section id="work" class="work" aria-labelledby="work-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2 id="work-title" class="section-title" data-split-lines>Data, design &amp; product</h2>
+        </div>
+        <p class="section-aside" data-fade>Each project is labelled with what it actually is: completed, in progress or conceptual.</p>
+      </div>
+
+      <ol class="work-list" data-stagger>
+        <li class="work-row" data-fade data-preview="projects/retail-demand-forecasting/reports/figures/mase_by_year.svg">
+          <span class="work-num">1.0</span>
+          <div class="work-main">
+            <h3>Retail Demand Forecasting &amp; Planning Buffers</h3>
+            <p>Twelve-month forecasts for 110 Australian retail series (ABS data, 1982–2018). ETS cut mean MASE from 1.21 to 1.06 against a seasonal-naive baseline in rolling-origin tests; error-based buffers covered 82% of months against a 90% target.</p>
+            <p class="work-meta"><span class="status status-done">Completed first version</span> Solo · Python, pandas, statsmodels, scikit-learn</p>
+          </div>
+          <div class="work-links">
+            <a class="work-link" href="projects/retail-demand-forecasting/">Results &amp; method <span aria-hidden="true">→</span></a>
+            <a class="work-link" href="https://github.com/dkiplikurniawan/portfolio/tree/main/projects/retail-demand-forecasting" rel="noopener">Source code <span aria-hidden="true">→</span></a>
+          </div>
+        </li>
+        <li class="work-row" data-fade data-preview="assets/voldo-home.webp">
+          <span class="work-num">2.0</span>
+          <div class="work-main">
+            <h3>VOLDO — volunteer &amp; social-impact app</h3>
+            <p>80+ Figma screens for three roles and an admin panel: user flows, role architecture and a consistent design system.</p>
+            <p class="work-meta"><span class="status status-progress">Design in progress</span> Sole designer · Figma</p>
+          </div>
+          <div class="work-links"><a class="work-link" href="#voldo">See the screens <span aria-hidden="true">↑</span></a></div>
+        </li>
+        <li class="work-row" data-fade>
+          <span class="work-num">3.0</span>
+          <div class="work-main">
+            <h3>SPASI — café-based productivity &amp; community platform</h3>
+            <p>Formerly RUANGI·JO. A product concept for young urban Indonesians who work and study from cafés: brand identity, mobile UI screens, and a product blueprint with MoSCoW-prioritised requirements and an accessibility review.</p>
+            <p class="work-meta"><span class="status status-concept">Conceptual case study</span> Product &amp; UX designer · Figma, PRD</p>
+          </div>
+        </li>
+        <li class="work-row" data-fade>
+          <span class="work-num">4.0</span>
+          <div class="work-main">
+            <h3>Pangkasin.Id — barber-booking app</h3>
+            <p>UI/UX for a student startup under Wirausaha Merdeka, the national student entrepreneurship programme: user research, high-fidelity wireframes, prototypes and visual guidelines.</p>
+            <p class="work-meta"><span class="status status-done">Completed design work, 2022</span> UI/UX designer · Figma</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="work-preview" aria-hidden="true"><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="/></div>
+  </section>
+
+  <!-- ============================ QUOTE ============================ -->
+  <section class="quote" aria-label="Approach">
+    <div class="max-w-container mx-auto px-5 sm:px-10">
+      <blockquote>
+        <p class="quote-text" data-scrub-words>“Accessible technology is only as good as the evidence behind it.”</p>
+      </blockquote>
+      <p class="quote-note" data-fade>That is why every number on this page says where it comes from, and every project says whether it is built, designed or still a concept.</p>
+    </div>
+  </section>
+
+  <!-- ============================ EXPERIENCE ============================ -->
+  <section id="experience" class="experience" aria-labelledby="experience-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10 grid grid-cols-1 lg:grid-cols-12 gap-14">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Experience</p>
+        <h2 id="experience-title" class="section-title" data-split-lines>Work &amp; research</h2>
+        <ol class="timeline mt-12" data-stagger>
+          <li class="timeline-item" data-fade>
+            <p class="timeline-when">2022 – 2023 · Thesis &amp; community service, Medan</p>
+            <h3>Lead Software Developer — DEAFSAPP</h3>
+            <ul>
+              <li>Developed a Flutter app for BISINDO learning and communication with SLB Melati Aisyah.</li>
+              <li>Integrated gesture recognition, speech-to-text and AR sign visualisation in the thesis-stage system.</li>
+              <li>Field-tested the app with 17 students and 8 teachers at the school.</li>
+            </ul>
+          </li>
+          <li class="timeline-item" data-fade>
+            <p class="timeline-when">2022 · Internship · Codinglab.id (software house), Medan</p>
+            <h3>UI/UX Designer &amp; AI Application Developer Intern</h3>
+            <ul>
+              <li>Designed responsive interfaces and user flows in Figma for client web applications.</li>
+              <li>Assisted engineers integrating machine learning models into web and mobile back ends.</li>
+              <li>Took part in requirement gathering, sprint planning and design iteration with clients.</li>
+            </ul>
+          </li>
+          <li class="timeline-item" data-fade>
+            <p class="timeline-when">2022 · Wirausaha Merdeka programme, Medan</p>
+            <h3>UI/UX Designer — Pangkasin.Id</h3>
+            <ul><li>Conducted user research and designed high-fidelity prototypes for a barber-booking platform.</li></ul>
+          </li>
+          <li class="timeline-item" data-fade>
+            <p class="timeline-when">2019 – 2023 · Student organisations, UMSU</p>
+            <h3>HIMASI (Research &amp; Technology) and IMM (Community Empowerment)</h3>
+            <ul><li>Organised IT literacy workshops at schools and orphanages; hosted faculty technology seminars as master of ceremonies.</li></ul>
+          </li>
+        </ol>
+      </div>
+
+      <div class="lg:col-span-5 space-y-12">
+        <div data-stagger>
+          <h3 class="side-title" data-fade>Publication</h3>
+          <div class="side-card" data-fade>
+            <p>Kurniawan, D. K. (2022). <cite lang="id">Pengaruh Kecanduan Game Online pada Remaja terhadap Perkembangan Psikolog Anak dengan Tingkat Kecemasan Orang Tua.</cite> <span lang="id">Jurnal Penelitian, Pendidikan dan Pengajaran (JPPP)</span>, 3(2).</p>
+            <p class="side-note">On how online game addiction among adolescents relates to child psychological development and parental anxiety. Sole author.</p>
+            <a class="text-link" href="https://doi.org/10.30596/jppp.v3i2.10835" rel="noopener">doi.org/10.30596/jppp.v3i2.10835 <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div data-stagger>
+          <h3 class="side-title" data-fade>Achievements</h3>
+          <ul class="side-list">
+            <li data-fade><strong>National Finalist</strong>, LIDM 2023, <span lang="id">Inovasi Teknologi Digital Pendidikan</span> division, Puspresnas. Finals at Universitas Pendidikan Indonesia, 4–6 July 2023.</li>
+            <li data-fade><strong>Registered copyright</strong> for DEAFSAPP, No. EC00202341333, DJKI (2023), co-creator.</li>
+            <li data-fade><strong>3rd place</strong>, University Logic Debate Competition, UMSU (2022).</li>
+          </ul>
+        </div>
+        <div data-stagger>
+          <h3 class="side-title" data-fade>Certificates</h3>
+          <ul class="side-list">
+            <li data-fade><strong>IBM AI Engineering</strong> Professional Certificate, Coursera, 13 courses, Oct 2026
+              <span class="link-row"><a href="https://coursera.org/verify/professional-cert/XZCLA29KI5K1" rel="noopener">Verify on Coursera</a><a href="assets/IBM%20AI%20Engineering.pdf">Certificate PDF</a></span></li>
+            <li data-fade><strong>IBM Data Science</strong> Professional Certificate, Coursera, 12 courses, Oct 2026
+              <span class="link-row"><a href="https://coursera.org/verify/professional-cert/BQ4T1C7VB8EC" rel="noopener">Verify on Coursera</a><a href="assets/IBM%20DATA%20SCIENCE.pdf">Certificate PDF</a></span></li>
+            <li data-fade><strong>Kaggle Learn</strong>: Computer Vision and Intermediate Machine Learning, Sept 2026
+              <span class="link-row"><a href="https://www.kaggle.com/learn/certification/dulkiplikurniawannn/computer-vision" rel="noopener">Computer Vision certificate</a><a href="https://www.kaggle.com/learn/certification/dulkiplikurniawannn/intermediate-machine-learning" rel="noopener">Intermediate ML certificate</a></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SKILLS (original design) ============================ -->
+  <section id="skills" class="skills" aria-labelledby="skills-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">Capabilities</p>
+          <h2 id="skills-title" class="section-title" data-split-lines>Technical &amp; Design Stack</h2>
+        </div>
+        <p class="section-aside" data-fade>Algorithmic vision, human-centred design and accessible cross-platform software. “Coursework” marks skills practised in certificate labs, not yet in a shipped project.</p>
+      </div>
+
+      <div class="skills-tabs" data-tabs data-fade>
+        <div class="tab-list" role="tablist" aria-label="Skill areas" hidden>
+          <span class="tab-indicator" aria-hidden="true"></span>
+          <button role="tab" id="tab-se" aria-controls="panel-se" aria-selected="false" tabindex="-1" type="button">Software Engineering</button>
+          <button role="tab" id="tab-ui" aria-controls="panel-ui" aria-selected="false" tabindex="-1" type="button">UI/UX &amp; 3D Modeling</button>
+          <button role="tab" id="tab-ai" aria-controls="panel-ai" aria-selected="true" tabindex="0" type="button">AI &amp; Assistive Tech</button>
+          <button role="tab" id="tab-comms" aria-controls="panel-comms" aria-selected="false" tabindex="-1" type="button">Languages &amp; Comms</button>
+        </div>
+
+        <div class="skill-panels">
+          <div role="tabpanel" id="panel-se" aria-labelledby="tab-se" class="skill-panel" tabindex="0">
+            <div class="skill-panel-head"><h3><span class="dot" aria-hidden="true"></span>Software Engineering</h3><span class="skill-kicker">Core stack</span></div>
+            <ul class="skill-rows">
+              <li><span>Python</span><span>Data science, ML</span></li>
+              <li><span>Flutter &amp; Dart</span><span>Mobile apps (GetX, Rive)</span></li>
+              <li><span>JavaScript</span><span>Web front end, basic Node.js</span></li>
+              <li><span>PHP &amp; MySQL</span><span>Relational databases</span></li>
+              <li class="wide"><span>Git &amp; GitHub</span><span>Version control</span></li>
+            </ul>
+          </div>
+          <div role="tabpanel" id="panel-ui" aria-labelledby="tab-ui" class="skill-panel" tabindex="0">
+            <div class="skill-panel-head"><h3><span class="dot" aria-hidden="true"></span>UI/UX &amp; 3D Modeling</h3><span class="skill-kicker">Human experience</span></div>
+            <ul class="skill-rows">
+              <li><span>Figma</span><span>Design systems, 80+ screens</span></li>
+              <li><span>User research</span><span>Pangkasin.Id, prototyping</span></li>
+              <li><span>Usability testing</span><span>Field study, 25 participants</span></li>
+              <li><span>Product docs</span><span>PRD, MoSCoW</span></li>
+              <li class="wide"><span>Blender 3D</span><span>3D modeling</span></li>
+            </ul>
+          </div>
+          <div role="tabpanel" id="panel-ai" aria-labelledby="tab-ai" class="skill-panel" tabindex="0">
+            <div class="skill-panel-head"><h3><span class="dot" aria-hidden="true"></span>AI &amp; Assistive Tech</h3><span class="skill-kicker">Vision &amp; data</span></div>
+            <ul class="skill-rows">
+              <li><span>MediaPipe</span><span>Hand &amp; pose landmarks (thesis)</span></li>
+              <li><span>PyTorch &amp; Keras</span><span>Deep learning (coursework)</span></li>
+              <li><span>Computer vision</span><span>Kaggle certificate</span></li>
+              <li><span>scikit-learn &amp; statsmodels</span><span>Forecasting project</span></li>
+              <li><span>LLMs, LangChain &amp; RAG</span><span>IBM coursework</span></li>
+              <li><span>Accessibility</span><span>WCAG-informed design</span></li>
+            </ul>
+          </div>
+          <div role="tabpanel" id="panel-comms" aria-labelledby="tab-comms" class="skill-panel" tabindex="0">
+            <div class="skill-panel-head"><h3><span class="dot" aria-hidden="true"></span>Languages &amp; Comms</h3><span class="skill-kicker">Communication</span></div>
+            <ul class="skill-rows">
+              <li><span>Indonesian</span><span>Native speaker</span></li>
+              <li><span>English</span><span>IELTS overall 5.5</span></li>
+              <li><span>Academic writing</span><span>Journal article, 2022</span></li>
+              <li><span>Public speaking</span><span>Debate 3rd place, MC</span></li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. ABOUT ME SECTION -->
-  <section class="w-full py-24 lg:py-32 bg-dark-base text-white relative overflow-hidden" id="about">
-    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-neutral-800/20 blur-[120px] pointer-events-none rounded-full"></div>
-    <div class="max-w-container mx-auto px-6 sm:px-10 relative z-10 space-y-16">
-      
-      <div class="space-y-4 max-w-4xl scroll-reveal-item">
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span class="text-[11px] font-semibold tracking-[0.2em] uppercase text-neutral-400 font-headline">Ethos & Approach</span>
-        </div>
-        <h2 class="font-headline text-3xl sm:text-5xl lg:text-6xl font-light tracking-[-0.03em] leading-tight text-white text-glow">
-          “Building assistive AI that listens with its eyes.”
-        </h2>
-        <p class="text-[16px] sm:text-[18px] text-neutral-400 font-normal leading-relaxed max-w-2xl pt-2">
-          Information Systems graduate (UMSU, Medan), specializing in AR/ML gesture recognition for accessibility, blending empirical HCI methodology with inclusive design.
-        </p>
-        <div class="flex flex-wrap items-center gap-2 pt-3">
-          <span class="px-4 py-1.5 rounded-full bg-dark-elevated border border-hairline-dark text-[11px] text-neutral-300 font-medium font-headline">Information Systems Graduate — UMSU</span>
-          <span class="px-4 py-1.5 rounded-full bg-dark-elevated border border-hairline-dark text-[11px] text-neutral-300 font-medium font-headline flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[13px] text-neutral-400">location_on</span>Medan, Indonesia
-          </span>
-        </div>
+  <!-- ============================ CONTACT ============================ -->
+  <section id="contact" class="contact" aria-labelledby="contact-title">
+    <div class="max-w-container mx-auto px-5 sm:px-10 grid grid-cols-1 lg:grid-cols-12 gap-14">
+      <div class="lg:col-span-5">
+        <p class="eyebrow eyebrow-dark">Get in touch</p>
+        <h2 id="contact-title" class="contact-title" data-split-lines>Speak directly</h2>
+        <p class="contact-copy" data-fade>Open to full-time roles, freelance UI/UX and app development, research collaboration, and master's programme enquiries.</p>
+        <ul class="contact-list" data-fade>
+          <li><span>Email</span><a href="mailto:dkiplikurniawan@gmail.com">dkiplikurniawan@gmail.com</a></li>
+          <li><span>WhatsApp</span><a href="https://wa.me/6282360760559" rel="noopener">+62 823-6076-0559</a></li>
+          <li><span>Profiles</span><span class="link-row"><a href="https://www.linkedin.com/in/dul-kipli-kurniawan-b82345376" rel="noopener">LinkedIn</a><a href="https://github.com/dkiplikurniawan" rel="noopener">GitHub</a></span></li>
+          <li><span>Location</span>Medan, North Sumatra, Indonesia (UTC+7)</li>
+        </ul>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        <div class="lg:col-span-5 p-8 sm:p-10 rounded-[32px] bg-dark-surface border border-hairline-dark flex flex-col justify-between shadow-2xl relative overflow-hidden group transition-transform duration-300 ease-out scroll-reveal-item" id="gpa-card">
-          <div class="space-y-2 relative z-10">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Academic Honors & Excellence</span>
-              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-semibold font-headline">UMSU '23</span>
-            </div>
-            <h3 class="text-xl font-medium text-white font-headline">GPA 3.70 / 4.00 · Cum Laude</h3>
+      <div class="lg:col-span-7" data-fade>
+        <div class="form-card">
+          <h3>Send a message</h3>
+          <p class="form-hint">All fields are required. If delivery can't be confirmed, you'll get a ready-to-send email instead.</p>
+          <div class="sent-panel" id="sent-panel" hidden tabindex="-1">
+            <svg class="sent-mark" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36" pathLength="1"/><path d="M24 41l11 11 21-23" pathLength="1"/></svg>
+            <h3>Message sent</h3>
+            <p id="sent-text">Thank you. I usually reply within a few days.</p>
+            <button type="button" class="btn btn-white" id="send-another">Send another message</button>
           </div>
-
-          <div class="py-6 flex items-center justify-center relative my-auto">
-            <div class="absolute w-44 h-44 rounded-full bg-emerald-500/20 blur-2xl pointer-events-none transition-all duration-1000 opacity-60 scale-100 halo-pulse" id="gpa-halo"></div>
-            <div class="absolute w-56 h-56 rounded-full border border-emerald-500/10 pointer-events-none flex items-center justify-center animate-orbit">
-              <div class="absolute -top-1 w-2 h-2 rounded-full bg-emerald-300 shadow-[0_0_8px_#34d399]"></div>
-            </div>
-            
-            <div class="relative w-48 h-48 flex items-center justify-center">
-              <svg class="w-48 h-48 transform -rotate-90 filter drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]" viewBox="0 0 120 120">
-                <defs>
-                  <linearGradient id="gpaGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-                    <stop offset="0%" stop-color="#34D399"></stop>
-                    <stop offset="60%" stop-color="#10B981"></stop>
-                    <stop offset="100%" stop-color="#06B6D4"></stop>
-                  </linearGradient>
-                </defs>
-                <circle cx="60" cy="60" fill="none" r="50" stroke="rgba(255,255,255,0.07)" stroke-width="9"></circle>
-                <circle class="transition-[stroke-dashoffset] ease-out" cx="60" cy="60" fill="none" id="gpa-circle-progress" r="50" stroke="url(#gpaGrad)" stroke-dasharray="314.16" stroke-dashoffset="314.16" stroke-linecap="round" stroke-width="9" style="transition-duration: 2200ms;"></circle>
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                <span class="font-headline text-4xl sm:text-5xl font-light tracking-tight text-white tabular-nums" id="gpa-counter">0.00</span>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span class="text-[10px] uppercase font-semibold tracking-wider text-emerald-400 font-headline">Cum Laude</span>
-                </div>
+          <form id="inquiry-form" class="space-y-5 mt-7" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div class="field">
+                <label for="inquiry-name">Full name</label>
+                <input id="inquiry-name" name="name" type="text" autocomplete="name" required aria-describedby="inquiry-name-error"/>
+                <p id="inquiry-name-error" class="error" hidden></p>
+              </div>
+              <div class="field">
+                <label for="inquiry-email">Email</label>
+                <input id="inquiry-email" name="email" type="email" autocomplete="email" required aria-describedby="inquiry-email-error"/>
+                <p id="inquiry-email-error" class="error" hidden></p>
               </div>
             </div>
-          </div>
-
-          <div class="pt-4 border-t border-hairline-dark text-center space-y-1 relative z-10">
-            <p class="text-[13px] text-white font-medium font-headline">Bachelor of Information Systems</p>
-            <p class="text-[12px] text-neutral-400 leading-relaxed font-normal">Universitas Muhammadiyah Sumatera Utara (Graduated Oct 2023 with Cum Laude Honors)</p>
-            
-            <!-- Link Download Academic CV -->
-            <div class="pt-3">
-              <a class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 border border-hairline-dark text-emerald-300 hover:text-white text-[11px] font-medium font-headline transition-all active:scale-95 focus-visible:ring-2" 
-                 href="assets/CV_Dul_Kipli_Kurniawan.pdf" 
-                 download="CV_Dul_Kipli_Kurniawan.pdf" 
-                 target="_blank">
-                <span class="material-symbols-outlined text-[14px]">description</span>
-                <span>Download Academic CV (PDF)</span>
-              </a>
+            <div class="field">
+              <label for="inquiry-classification">Topic</label>
+              <select id="inquiry-classification" name="classification">
+                <option value="Job or internship">Job or internship</option>
+                <option value="Freelance UI/UX or app development">Freelance UI/UX or app development</option>
+                <option value="Research collaboration">Research collaboration</option>
+                <option value="Academic or scholarship enquiry">Academic or scholarship enquiry</option>
+              </select>
             </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-7 flex flex-col justify-between gap-4" id="achievement-cards-container">
-          <div class="scroll-reveal-item p-5 sm:p-6 rounded-[24px] bg-dark-surface border border-hairline-dark hover:border-white/20 transition-all flex items-start gap-4" style="transition-delay: 100ms;">
-            <div class="w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 mt-0.5 text-white">
-              <span class="material-symbols-outlined text-[18px]">military_tech</span>
+            <div class="field">
+              <label for="inquiry-message">Message</label>
+              <textarea id="inquiry-message" name="message" rows="5" required aria-describedby="inquiry-message-error"></textarea>
+              <p id="inquiry-message-error" class="error" hidden></p>
             </div>
-            <div class="space-y-1">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-500 font-headline">Competitive Achievement</span>
-              <h4 class="text-[15px] font-semibold text-white font-headline">3rd Winner, Logic Debate Competition</h4>
-              <p class="text-[12px] text-neutral-400 leading-relaxed">Demonstrated critical argumentation, empirical reasoning, and communication excellence in structured regional logic and public policy debates.</p>
+            <div class="hp-field" aria-hidden="true">
+              <label for="inquiry-website">Leave this field empty</label>
+              <input id="inquiry-website" name="website" type="text" tabindex="-1" autocomplete="off"/>
             </div>
-          </div>
-
-          <div class="scroll-reveal-item p-5 sm:p-6 rounded-[24px] bg-dark-surface border border-hairline-dark hover:border-white/20 transition-all flex items-start gap-4" style="transition-delay: 200ms;">
-            <div class="w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 mt-0.5 text-white">
-              <span class="material-symbols-outlined text-[18px]">terminal</span>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-neutral-300 font-headline">Industry Experience</span>
-              <h4 class="text-[15px] font-semibold text-white font-headline">UI/UX Designer & AI App Developer Intern — Codinglab.id</h4>
-              <p class="text-[12px] text-neutral-400 leading-relaxed">Client-facing web and mobile systems development, translating stakeholder specifications into responsive architectures and ML-integrated workflows.</p>
-            </div>
-          </div>
-
-          <div class="scroll-reveal-item p-5 sm:p-6 rounded-[24px] bg-dark-surface border border-hairline-dark hover:border-white/20 transition-all flex items-start gap-4" style="transition-delay: 300ms;">
-            <div class="w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 mt-0.5 text-white">
-              <span class="material-symbols-outlined text-[18px]">emoji_events</span>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-500 font-headline">National Recognition</span>
-              <h4 class="text-[15px] font-semibold text-white font-headline">National Finalist, LIDM 2023</h4>
-              <p class="text-[12px] text-neutral-400 leading-relaxed">Awarded fully funded thesis program at Universitas Pendidikan Indonesia (UPI) Bandung by Puspresnas / Kemendikbudristek for assistive AR innovations.</p>
-            </div>
-          </div>
-
-          <a class="scroll-reveal-item p-5 sm:p-6 rounded-[24px] bg-dark-surface border border-hairline-dark hover:border-white/25 transition-all flex items-center justify-between gap-4 group focus-visible:ring-2" href="https://www.researchgate.net" rel="noopener noreferrer" style="transition-delay: 400ms;" target="_blank">
-            <div class="flex items-start gap-4">
-              <div class="w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 mt-0.5 text-white">
-                <span class="material-symbols-outlined text-[18px]">article</span>
-              </div>
-              <div class="space-y-1">
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 font-headline">Peer Publication</span>
-                <h4 class="text-[14px] sm:text-[15px] font-semibold text-white group-hover:text-emerald-300 transition-colors font-headline">ResearchGate: Psychological Analysis of Game Addiction</h4>
-                <p class="text-[12px] text-neutral-400">Empirical inquiry into adolescent online gaming impact & parental anxiety · DOI: 10.13140/RG.2.2.14885.68329</p>
-              </div>
-            </div>
-            <span class="text-neutral-400 group-hover:text-white transition-colors text-sm shrink-0">↗</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. FEATURED PRODUCT REVEAL: DEAFSAPP -->
-  <section class="w-full pt-24 lg:pt-32 bg-surface" id="deafsapp">
-    <div class="max-w-container mx-auto px-6 sm:px-10 space-y-14">
-      <div class="space-y-6 scroll-reveal-item">
-        <div class="flex flex-wrap items-center gap-2.5">
-          <span class="px-3.5 py-1.5 rounded-full bg-neutral-900 text-white text-[11px] font-medium font-headline tracking-wide">National Finalist, LIDM 2023</span>
-          <span class="px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-neutral-800 text-[11px] font-medium font-headline shadow-sm">Hak Cipta Terdaftar — No. EC00202341333 (DJKI, 2023, Status: Aktif)</span>
-          <span class="px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 text-neutral-600 text-[11px] font-medium font-headline flex items-center gap-1.5 shadow-sm">
-            <span class="material-symbols-outlined text-[13px] text-neutral-500">verified</span>
-            Inventor: Al Hamidy, Dul Kipli Kurniawan, dkk.
-          </span>
-        </div>
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <div class="space-y-3 max-w-3xl">
-            <h2 class="font-headline text-4xl sm:text-6xl font-normal tracking-[-0.03em] text-neutral-950">DEAFSAPP</h2>
-            <p class="text-xl sm:text-2xl text-neutral-700 font-light font-headline">Augmented Reality BISINDO Translation</p>
-          </div>
-          <div>
-            <a class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-neutral-950 text-white text-[13px] font-medium hover:bg-neutral-800 transition-all shadow-md active:scale-95 focus-visible:ring-2" href="#contact">
-              <span>Request Thesis Dossier</span><span class="text-sm">↗</span>
-            </a>
-          </div>
-        </div>
-        <div class="p-6 sm:p-7 rounded-3xl bg-surface-subtle border border-neutral-200/80 space-y-2 max-w-3xl">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500 font-headline">Problem Statement</p>
-          <p class="text-[14px] sm:text-[15px] text-neutral-800 leading-relaxed">
-            Acute communication barriers persist for deaf and hard-of-hearing students at SLB Melati Aisyah due to an absence of accessible, low-cost AR translation tools operable on standard consumer smartphones without sensory gloves.
-          </p>
-        </div>
-      </div>
-
-      <div class="space-y-6 relative" id="deafsapp-pipeline">
-        <div class="flex items-center justify-between">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Engineering Architecture & Pipeline</span>
-          <span class="text-[11px] text-neutral-500 font-medium font-headline">Monocular On-Device Spatial AI</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-          <svg class="hidden md:block absolute top-1/2 left-0 w-full h-12 -translate-y-1/2 pointer-events-none z-0" fill="none" preserveAspectRatio="none" viewBox="0 0 900 40">
-            <path class="deafsapp-path" d="M 150 20 L 450 20 L 750 20" stroke="#10B981" stroke-dasharray="8 8" stroke-width="2.5"></path>
-          </svg>
-
-          <div class="scroll-reveal-item p-8 rounded-[30px] bg-white border border-neutral-200/70 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-8 hover:shadow-xl transition-all relative z-10" style="transition-delay: 100ms;">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center text-neutral-900">
-                  <span class="material-symbols-outlined text-[24px]">videocam</span>
-                </div>
-                <span class="text-[11px] font-bold tracking-widest text-neutral-400 uppercase font-headline">Phase 01</span>
-              </div>
-              <div class="space-y-1.5">
-                <p class="text-[10px] font-semibold tracking-wider uppercase text-neutral-500 font-headline">Monocular Vision & Coordinate Extraction</p>
-                <h3 class="font-headline text-2xl font-medium text-neutral-950">DEAFSAPP AR Pipeline</h3>
-              </div>
-            </div>
-            <div class="pt-4 border-t border-neutral-100">
-              <p class="text-[13px] text-neutral-600 font-medium">MediaPipe 21-hand and 33-pose coordinate extraction</p>
-            </div>
-          </div>
-
-          <div class="scroll-reveal-item p-8 rounded-[30px] bg-white border border-neutral-200/70 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-8 hover:shadow-xl transition-all relative z-10" style="transition-delay: 250ms;">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center text-neutral-900">
-                  <span class="material-symbols-outlined text-[24px]">memory</span>
-                </div>
-                <span class="text-[11px] font-bold tracking-widest text-neutral-400 uppercase font-headline">Phase 02</span>
-              </div>
-              <div class="space-y-1.5">
-                <p class="text-[10px] font-semibold tracking-wider uppercase text-neutral-500 font-headline">Temporal & Kinematic Engine</p>
-                <h3 class="font-headline text-2xl font-medium text-neutral-950">BISINDO Motion AI</h3>
-              </div>
-            </div>
-            <div class="pt-4 border-t border-neutral-100">
-              <p class="text-[13px] text-neutral-600 font-medium">On-device sliding temporal window inference</p>
-            </div>
-          </div>
-
-          <div class="scroll-reveal-item p-8 rounded-[30px] bg-white border border-neutral-200/70 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between space-y-8 hover:shadow-xl transition-all relative z-10" style="transition-delay: 400ms;">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center text-neutral-900">
-                  <span class="material-symbols-outlined text-[24px]">view_in_ar</span>
-                </div>
-                <span class="text-[11px] font-bold tracking-widest text-neutral-400 uppercase font-headline">Phase 03</span>
-              </div>
-              <div class="space-y-1.5">
-                <p class="text-[10px] font-semibold tracking-wider uppercase text-neutral-500 font-headline">Interactive User Feedback</p>
-                <h3 class="font-headline text-2xl font-medium text-neutral-950">Real-Time AR Projection</h3>
-              </div>
-            </div>
-            <div class="pt-4 border-t border-neutral-100">
-              <p class="text-[13px] text-neutral-600 font-medium">Real-time animated 3D avatar and bi-directional sign-to-speech</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="w-full mt-20 py-20 bg-dark-base text-white border-y border-hairline-dark" id="deafsapp-numbers-section">
-      <div class="max-w-container mx-auto px-6 sm:px-10 space-y-10">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-hairline-dark pb-6">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">DEAFSAPP · By the Numbers</span>
-          <span class="text-[12px] text-neutral-500">UMSU Research & Puspresnas Validation</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div class="space-y-2 scroll-reveal-item">
-            <p class="font-headline text-5xl sm:text-6xl font-light tracking-tight text-white tabular-nums flex items-baseline gap-1">
-              <span class="deafsapp-stat-counter" data-target="76.1">0.0</span><span>%</span>
-              <span class="material-symbols-outlined text-2xl text-emerald-400 opacity-0 transition-all duration-500 stat-icon-glow">verified</span>
-            </p>
-            <p class="text-[13px] font-semibold text-neutral-200 font-headline">Recognition Accuracy</p>
-            <p class="text-[11px] text-neutral-400">26 dynamic sign sequences</p>
-          </div>
-          <div class="space-y-2 scroll-reveal-item" style="transition-delay: 100ms;">
-            <p class="font-headline text-5xl sm:text-6xl font-light tracking-tight text-emerald-400 tabular-nums flex items-baseline gap-1">
-              <span class="deafsapp-stat-counter" data-target="76.5">0.0</span><span>%</span>
-              <span class="material-symbols-outlined text-2xl text-emerald-400 opacity-0 transition-all duration-500 stat-icon-glow">thumb_up</span>
-            </p>
-            <p class="text-[13px] font-semibold text-neutral-200 font-headline">Usability Agreement</p>
-            <p class="text-[11px] text-neutral-400">SUS index · 17 students + 8 teachers</p>
-          </div>
-          <div class="space-y-2 scroll-reveal-item" style="transition-delay: 200ms;">
-            <p class="font-headline text-3xl sm:text-4xl font-normal tracking-tight text-white pt-2">EC00202341333</p>
-            <p class="text-[13px] font-semibold text-neutral-200 font-headline">Registered Hak Cipta</p>
-            <p class="text-[11px] text-neutral-400">DJKI Kemenkumham RI (Status: Aktif)</p>
-          </div>
-          <div class="space-y-2 scroll-reveal-item" style="transition-delay: 300ms;">
-            <p class="font-headline text-3xl sm:text-4xl font-normal tracking-tight text-white pt-2">National Finalist</p>
-            <p class="text-[13px] font-semibold text-neutral-200 font-headline">LIDM 2023</p>
-            <p class="text-[11px] text-neutral-400">Puspresnas / Kemendikbudristek</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. LATEST PROJECT: SUCARE -->
-  <section class="w-full py-24 lg:py-32 bg-[#0D0E11] text-white relative overflow-hidden" id="latest-project">
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[580px] bg-gradient-to-b from-emerald-500/10 via-neutral-800/20 to-transparent blur-[140px] pointer-events-none rounded-full"></div>
-    <div class="max-w-container mx-auto px-6 sm:px-10 relative z-10 space-y-16">
-      
-      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b border-hairline-dark pb-10 scroll-reveal-item">
-        <div class="space-y-4 max-w-3xl">
-          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-medium font-headline">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-            </span>
-            <span class="text-neutral-300">LATEST PROJECT</span>
-            <span class="text-neutral-600">·</span>
-            <span class="text-emerald-400">Active Design Development</span>
-          </div>
-          <h2 class="font-headline text-5xl sm:text-7xl font-normal tracking-[-0.03em] text-white">SUCARE</h2>
-          <p class="text-[18px] sm:text-[20px] text-neutral-200 font-medium font-headline leading-snug">
-            A community-driven social impact platform, currently in active development
-          </p>
-          <p class="text-[14px] sm:text-[15px] text-neutral-400 leading-relaxed max-w-2xl font-normal">
-            Designing the UI/UX for a volunteer and social-impact community app — from community feed layouts to detailed story screens — built to make grassroots initiatives easier to discover and join.
-          </p>
-          <div class="flex flex-wrap gap-2 pt-2">
-            <span class="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-[11px] text-neutral-300 font-headline">Figma</span>
-            <span class="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-[11px] text-neutral-300 font-headline">UI/UX Design</span>
-            <span class="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-[11px] text-neutral-300 font-headline">Community Platform</span>
-            <span class="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-[11px] text-neutral-300 font-headline">Social Impact</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-4 shrink-0">
-          <a class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-neutral-950 text-[13px] font-medium hover:bg-neutral-200 transition-all shadow-lg active:scale-95 font-headline focus-visible:ring-2" href="#contact">
-            <span>View Case Study</span><span class="text-xs">↗</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="relative w-full rounded-[40px] bg-dark-surface/60 border border-hairline-dark p-8 sm:p-14 lg:p-20 overflow-hidden flex flex-col items-center justify-center phone-3d-container" id="sucare-phones-section">
-        <div class="w-full max-w-5xl relative py-12 px-4 sm:px-8 flex flex-col items-center justify-center overflow-hidden">
-          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[550px] sm:w-[700px] h-[160px] bg-emerald-500/15 blur-[90px] pointer-events-none rounded-full"></div>
-          
-          <div class="w-full flex items-center justify-center gap-3 sm:gap-6 lg:gap-8 relative z-10 pt-4 pb-8">
-            <div class="phone-card phone-left animate-palmo-float w-[160px] sm:w-[220px] lg:w-[250px] shrink-0 rounded-[40px] sm:rounded-[48px] p-[6px] sm:p-[8px] bg-gradient-to-b from-[#40434b] via-[#1a1b1f] to-[#0e0f12] shadow-[-16px_28px_45px_rgba(0,0,0,0.8)] border border-white/15" style="animation-delay: 0s;">
-              <div class="w-full rounded-[34px] sm:rounded-[42px] overflow-hidden bg-black relative aspect-[9/19.5] border border-neutral-900">
-                <div class="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 w-16 sm:w-20 h-4 sm:h-5 bg-black rounded-full z-20 flex items-center justify-end pr-1.5 border border-white/10 shadow-sm">
-                  <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#0a1220] border border-white/10"></div>
-                </div>
-                <img alt="SUCARE Home Screen" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1wwufHbE_ztg8drW13QaiupHHB0sgJxToPKVWOE4dBX1Hr__3qYT1oVG4XECkbQGaKL97T-wtCvsReEYocOtj3NQe5U6r9QSCub3VvAafkdN5G3FrXaqqbkA7Y3PmYe3r_cAxThczwJuaZ7KQbOx6uLPd2XkSOjjR0vx04mCe4_0FeKTsJsianskd6pe8iRgTT6aRpY7cTzH7Aqr4tnFPVULVW8MU8J-H6MQU1fSjpSKBpYP-M0J2D9UGJlSGn7g2tPQxIOs-3ZT0KRs"/>
-                <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-60"></div>
-              </div>
-            </div>
-
-            <div class="phone-card phone-center animate-palmo-float w-[185px] sm:w-[260px] lg:w-[290px] shrink-0 rounded-[44px] sm:rounded-[52px] p-[7px] sm:p-[9px] bg-gradient-to-b from-[#565963] via-[#24262b] to-[#121316] shadow-[0_35px_70px_rgba(0,0,0,0.9)] border border-white/25 z-20" style="animation-delay: -2s;">
-              <div class="w-full rounded-[37px] sm:rounded-[45px] overflow-hidden bg-black relative aspect-[9/19.5] border border-neutral-800">
-                <div class="absolute top-3 sm:top-3.5 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-4.5 sm:h-5.5 bg-black rounded-full z-20 flex items-center justify-end pr-2 border border-white/15 shadow-sm">
-                  <div class="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#0a1220] border border-white/15"></div>
-                </div>
-                <img alt="SUCARE Feed Screen" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjwzHsUwR4Bu9Y2OsoKx054YHzHYudF3TQZe07rhoGa8omk8Txr-S8dD0uZDEC_6MsIExCHutzGzPAml5mmh5W-uxk9lj6LRQEHE7W2DTBwqggMxbKWAQCu7D7x1dxAhPTnyhFGqQnxSRelWMmU0sJBd_gtEs9uFvDYyjy60Rp9XiJ5ltoBCom0ICe9NnVLWS6mznlilFU9eGG4koAtqbfB9ZcCgRgvocnE5-I4_vkn8q9IrYbitI6KgKJzf6s3vcnbbz1ia2amU-Id7w"/>
-                <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/15 via-transparent to-transparent opacity-75"></div>
-              </div>
-            </div>
-
-            <div class="phone-card phone-right animate-palmo-float w-[160px] sm:w-[220px] lg:w-[250px] shrink-0 rounded-[40px] sm:rounded-[48px] p-[6px] sm:p-[8px] bg-gradient-to-b from-[#40434b] via-[#1a1b1f] to-[#0e0f12] shadow-[16px_28px_45px_rgba(0,0,0,0.8)] border border-white/15" style="animation-delay: -4s;">
-              <div class="w-full rounded-[34px] sm:rounded-[42px] overflow-hidden bg-black relative aspect-[9/19.5] border border-neutral-900">
-                <div class="absolute top-2.5 sm:top-3 left-1/2 -translate-x-1/2 w-16 sm:w-20 h-4 sm:h-5 bg-black rounded-full z-20 flex items-center justify-end pr-1.5 border border-white/10 shadow-sm">
-                  <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#0a1220] border border-white/10"></div>
-                </div>
-                <img alt="SUCARE Story Detail Screen" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZp2EsXSL8YwQFex6tkMMoqNNQHuFGK9YdoddRl-4WfSNDc38PY6ZOmS-OnQi-A26gEUGlfMRwTNIMzrI2AoYBZ594p1CqdTNcX7pMIK-YmhpgsHY-X9qNWZOtGjReUSd0i8mG6I17Y99dmczy3z8P_UKlQ2X1GU0YvjCTaPQchmBV1U5nnp2vAyy80yOs9yJzQw6NdP26vTIShP6m5rCRunBZCP7njitU76HX8bvJwxe2FaD1y86IDlOUxcFdt2ytphw"/>
-                <div class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-60"></div>
-              </div>
-            </div>
-
-          </div>
-          
-          <div class="w-full max-w-2xl mt-4 p-4 rounded-2xl apple-glass-dark border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 backdrop-blur-md shadow-xl">
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <p class="text-[13px] font-semibold text-white font-headline">SUCARE Mobile Experience Architecture</p>
-              </div>
-              <p class="text-[11px] text-neutral-400 pl-4">Interface preview across the SUCARE community platform.</p>
-            </div>
-            <span class="px-3 py-1 rounded-full bg-white/10 text-[10px] font-semibold tracking-wider uppercase text-emerald-300 font-headline border border-white/10 shrink-0 text-center">B.COMP.SC · UMSU</span>
-          </div>
-        </div>
-
-        <div class="w-full max-w-5xl pt-12 space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-hairline-dark pb-4">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Interface Architecture & Key Flows</span>
-            <span class="text-[11px] text-neutral-500 font-medium font-headline">3 Core App Views</span>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="spotlight-card rounded-[28px] border border-hairline-dark hover:border-white/30 transition-all p-4 flex flex-col justify-between group shadow-xl hover:-translate-y-1 overflow-hidden scroll-reveal-item">
-              <div class="w-full aspect-[9/19] rounded-2xl overflow-hidden bg-surface mb-4 border border-white/10 relative z-10">
-                <img alt="SUCARE Home Screen" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1wwufHbE_ztg8drW13QaiupHHB0sgJxToPKVWOE4dBX1Hr__3qYT1oVG4XECkbQGaKL97T-wtCvsReEYocOtj3NQe5U6r9QSCub3VvAafkdN5G3FrXaqqbkA7Y3PmYe3r_cAxThczwJuaZ7KQbOx6uLPd2XkSOjjR0vx04mCe4_0FeKTsJsianskd6pe8iRgTT6aRpY7cTzH7Aqr4tnFPVULVW8MU8J-H6MQU1fSjpSKBpYP-M0J2D9UGJlSGn7g2tPQxIOs-3ZT0KRs"/>
-              </div>
-              <div class="space-y-1 pt-1 relative z-10">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-headline">01 · Home & Discovery</span>
-                  <span class="material-symbols-outlined text-[16px] text-neutral-400">home</span>
-                </div>
-                <h4 class="text-[14px] font-semibold text-white font-headline">Personalized Volunteer Hub</h4>
-                <p class="text-[11px] text-neutral-400 leading-relaxed">Categorized SDG filters, personalized recommendation feed, and social impact progress counter.</p>
-              </div>
-            </div>
-
-            <div class="spotlight-card rounded-[28px] border border-hairline-dark hover:border-white/30 transition-all p-4 flex flex-col justify-between group shadow-xl hover:-translate-y-1 overflow-hidden scroll-reveal-item" style="transition-delay: 150ms;">
-              <div class="w-full aspect-[9/19] rounded-2xl overflow-hidden bg-surface mb-4 border border-white/10 relative z-10">
-                <img alt="SUCARE Feed Screen" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjwzHsUwR4Bu9Y2OsoKx054YHzHYudF3TQZe07rhoGa8omk8Txr-S8dD0uZDEC_6MsIExCHutzGzPAml5mmh5W-uxk9lj6LRQEHE7W2DTBwqggMxbKWAQCu7D7x1dxAhPTnyhFGqQnxSRelWMmU0sJBd_gtEs9uFvDYyjy60Rp9XiJ5ltoBCom0ICe9NnVLWS6mznlilFU9eGG4koAtqbfB9ZcCgRgvocnE5-I4_vkn8q9IrYbitI6KgKJzf6s3vcnbbz1ia2amU-Id7w"/>
-              </div>
-              <div class="space-y-1 pt-1 relative z-10">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-headline">02 · Community Feed</span>
-                  <span class="material-symbols-outlined text-[16px] text-neutral-400">public</span>
-                </div>
-                <h4 class="text-[14px] font-semibold text-white font-headline">Social Impact Streams</h4>
-                <p class="text-[11px] text-neutral-400 leading-relaxed">Weekly cumulative volunteer impact hero, community initiative updates, and interactive story sharing.</p>
-              </div>
-            </div>
-
-            <div class="spotlight-card rounded-[28px] border border-hairline-dark hover:border-white/30 transition-all p-4 flex flex-col justify-between group shadow-xl hover:-translate-y-1 overflow-hidden scroll-reveal-item" style="transition-delay: 300ms;">
-              <div class="w-full aspect-[9/19] rounded-2xl overflow-hidden bg-surface mb-4 border border-white/10 relative z-10">
-                <img alt="SUCARE Story Detail Screen" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeeSzImc0yfPWek9cw-HY87ZS-rNSx4jaddsj2XrkFBRFIfm7ACxRTQfmp3fNldu6SQ3FJjEIlNvhtdO4gowNhqUuK0N2tZd88LWFrJCfKCDmjl22knzdezeB11bAFiI5joZ-Jkn8DCbeUfB9tg3WSeclI4UZT97cYO_F_ElYlE5pIWEx43QuQl64MsM4dw6hYUFkm69zjRArS-XhiniaeEqFtfLAHgxhuk5306UN0JNHwgW5zu0PuwBWvsNgza6ShwKl_F17haX3NO08"/>
-              </div>
-              <div class="space-y-1 pt-1 relative z-10">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-headline">03 · Impact Story Detail</span>
-                  <span class="material-symbols-outlined text-[16px] text-neutral-400">auto_stories</span>
-                </div>
-                <h4 class="text-[14px] font-semibold text-white font-headline">Volunteer Case Study</h4>
-                <p class="text-[11px] text-neutral-400 leading-relaxed">Editorial pull-quotes, rich multimedia documentation, SDG metrics alignment, and community comments.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-10 flex items-center gap-2 text-center text-xs text-neutral-400">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>Status: In Active Development (Figma UI/UX Architecture & Prototype Stage)</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. OTHER WORK -->
-  <section class="w-full py-24 lg:py-32 bg-surface border-t border-hairline-light" id="other-work">
-    <div class="max-w-container mx-auto px-6 sm:px-10 space-y-12">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 scroll-reveal-item">
-        <div class="space-y-2">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Exploration & Practice</span>
-          <h2 class="font-headline text-3xl sm:text-5xl font-normal tracking-tight text-neutral-950">Other Work</h2>
-        </div>
-        <p class="text-[14px] text-neutral-500 font-normal max-w-sm">Selected UI/UX case studies and entrepreneurial design engagements.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="scroll-reveal-item p-8 sm:p-10 rounded-[32px] bg-white border border-neutral-200/80 space-y-8 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all group">
-          <div class="space-y-5">
-            <div class="flex items-center justify-between">
-              <span class="px-3.5 py-1 rounded-full bg-neutral-100 text-[11px] font-semibold uppercase tracking-wider text-neutral-600 font-headline">UX Case Study</span>
-              <span class="text-neutral-400 group-hover:text-neutral-950 transition-colors text-sm">↗</span>
-            </div>
-            <div class="space-y-3">
-              <h3 class="font-headline text-2xl sm:text-3xl font-normal text-neutral-950 group-hover:underline">RUANGI·JO — Café-Focused Productivity & Community App</h3>
-              <p class="text-[14px] sm:text-[15px] leading-relaxed text-neutral-600 font-normal">End-to-end UX case study covering user research, MoSCoW-prioritized PRD, WCAG accessibility audits, and business strategy for a café-based productivity and community concept.</p>
-            </div>
-          </div>
-          <div class="pt-5 border-t border-neutral-100 flex flex-wrap gap-2">
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">UX Research</span>
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">Accessibility Audit</span>
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">Product Strategy</span>
-          </div>
-        </div>
-
-        <div class="scroll-reveal-item p-8 sm:p-10 rounded-[32px] bg-white border border-neutral-200/80 space-y-8 flex flex-col justify-between shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all group" style="transition-delay: 150ms;">
-          <div class="space-y-5">
-            <div class="flex items-center justify-between">
-              <span class="px-3.5 py-1 rounded-full bg-neutral-100 text-[11px] font-semibold uppercase tracking-wider text-neutral-600 font-headline">Student Entrepreneurship Program</span>
-              <span class="text-neutral-400 group-hover:text-neutral-950 transition-colors text-sm">↗</span>
-            </div>
-            <div class="space-y-3">
-              <h3 class="font-headline text-2xl sm:text-3xl font-normal text-neutral-950 group-hover:underline">Pangkasin.Id — UI/UX for Wirausaha Merdeka</h3>
-              <p class="text-[14px] sm:text-[15px] leading-relaxed text-neutral-600 font-normal">Designed end-to-end interface and experience for a startup application under the national Wirausaha Merdeka student entrepreneurship program, including user research and iterative prototyping.</p>
-            </div>
-          </div>
-          <div class="pt-5 border-t border-neutral-100 flex flex-wrap gap-2">
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">Figma</span>
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">UI/UX Design</span>
-            <span class="px-3.5 py-1 rounded-full bg-surface-subtle border border-neutral-200/60 text-[11px] font-medium text-neutral-700 font-headline">Prototyping</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. SKILLS & STACK -->
-  <section class="w-full py-24 lg:py-32 bg-surface-subtle border-t border-hairline-light" id="skills">
-    <div class="max-w-container mx-auto px-6 sm:px-10 space-y-12">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 scroll-reveal-item">
-        <div class="space-y-2">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Capabilities</span>
-          <h2 class="font-headline text-3xl sm:text-5xl font-normal tracking-tight text-neutral-950">Technical & Design Stack</h2>
-        </div>
-        <p class="text-[14px] text-neutral-500 font-normal max-w-sm">Harmonizing algorithmic vision, human ergonomics, and accessible cross-platform software.</p>
-      </div>
-
-      <div class="w-full max-w-3xl mx-auto space-y-8">
-        <div class="flex items-center justify-start sm:justify-center overflow-x-auto py-2">
-          <div class="p-1.5 rounded-full bg-neutral-200/70 backdrop-blur-md flex items-center gap-1 border border-neutral-300/60 shrink-0">
-            <button class="skill-tab-btn cursor-pointer px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-medium font-headline transition-all duration-300 select-none text-neutral-600 focus-visible:ring-2" onclick="switchSkillTab('panel-se', this)" type="button">Software Engineering</button>
-            <button class="skill-tab-btn cursor-pointer px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-medium font-headline transition-all duration-300 hover:text-neutral-950 select-none text-neutral-600 focus-visible:ring-2" onclick="switchSkillTab('panel-ui', this)" type="button">UI/UX & 3D Modeling</button>
-            <button class="skill-tab-btn cursor-pointer px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-medium font-headline transition-all duration-300 hover:text-neutral-950 select-none bg-white text-neutral-950 shadow-sm focus-visible:ring-2" onclick="switchSkillTab('panel-ai', this)" type="button">AI & Assistive Tech</button>
-            <button class="skill-tab-btn cursor-pointer px-5 py-2 rounded-full text-[12px] sm:text-[13px] font-medium font-headline transition-all duration-300 text-neutral-600 hover:text-neutral-950 select-none focus-visible:ring-2" onclick="switchSkillTab('panel-comms', this)" type="button">Languages & Comms</button>
-          </div>
-        </div>
-
-        <div class="w-full relative min-h-[320px]">
-          <div class="skill-panel p-8 sm:p-12 rounded-[36px] sm:rounded-[44px] bg-white border border-neutral-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.03)] space-y-6 hidden" id="panel-se">
-            <div class="flex items-center justify-between border-b border-neutral-100 pb-5">
-              <h3 class="font-headline text-xl sm:text-2xl font-semibold text-neutral-950 flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-neutral-950"></span>Software Engineering
-              </h3>
-              <span class="text-[11px] font-bold tracking-widest uppercase text-neutral-400 font-headline">CORE STACK</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Python</span><span class="text-[12px] text-neutral-500 font-medium">PyTorch, ML</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Flutter & Dart</span><span class="text-[12px] text-neutral-500 font-medium">Mobile Systems</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">JavaScript</span><span class="text-[12px] text-neutral-500 font-medium">Node.js</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">PHP & MySQL</span><span class="text-[12px] text-neutral-500 font-medium">Relational DBMS</span></div>
-            </div>
-          </div>
-
-          <div class="skill-panel p-8 sm:p-12 rounded-[36px] sm:rounded-[44px] bg-white border border-neutral-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.03)] space-y-6 hidden" id="panel-ui">
-            <div class="flex items-center justify-between border-b border-neutral-100 pb-5">
-              <h3 class="font-headline text-xl sm:text-2xl font-semibold text-neutral-950 flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-neutral-950"></span>UI/UX & 3D Modeling
-              </h3>
-              <span class="text-[11px] font-bold tracking-widest uppercase text-neutral-400 font-headline">HUMAN EXPERIENCE</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Figma</span><span class="text-[12px] text-neutral-500 font-medium">Design Systems</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Usability Auditing</span><span class="text-[12px] text-neutral-500 font-medium">UX Research</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center sm:col-span-2"><span class="font-headline font-semibold text-[15px] text-neutral-900">Blender 3D</span><span class="text-[12px] text-neutral-500 font-medium">Rigging & Animation</span></div>
-            </div>
-          </div>
-
-          <div class="skill-panel p-8 sm:p-12 rounded-[36px] sm:rounded-[44px] bg-white border border-neutral-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.03)] space-y-6 block opacity-100 transform-none" id="panel-ai">
-            <div class="flex items-center justify-between border-b border-neutral-100 pb-5">
-              <h3 class="font-headline text-xl sm:text-2xl font-semibold text-neutral-950 flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-neutral-950"></span>AI & Assistive Tech
-              </h3>
-              <span class="text-[11px] font-bold tracking-widest uppercase text-neutral-400 font-headline">SPATIAL & VISION</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">MediaPipe</span><span class="text-[12px] text-neutral-500 font-medium">Spatial Mobile Tracking</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">OpenCV</span><span class="text-[12px] text-neutral-500 font-medium">Feature Tracking</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">ARCore / ARKit</span><span class="text-[12px] text-neutral-500 font-medium">Spatial Anchoring</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Kinematic Modeling</span><span class="text-[12px] text-neutral-500 font-medium">Temporal Windows</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center sm:col-span-2"><span class="font-headline font-semibold text-[15px] text-neutral-900">WCAG 2.1 AA</span><span class="text-[12px] text-neutral-500 font-medium">Accessible UI</span></div>
-            </div>
-          </div>
-
-          <div class="skill-panel hidden p-8 sm:p-12 rounded-[36px] sm:rounded-[44px] bg-white border border-neutral-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.03)] space-y-6" id="panel-comms">
-            <div class="flex items-center justify-between border-b border-neutral-100 pb-5">
-              <h3 class="font-headline text-xl sm:text-2xl font-semibold text-neutral-950 flex items-center gap-2.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-neutral-950"></span>Languages & Comms
-              </h3>
-              <span class="text-[11px] font-bold tracking-widest uppercase text-neutral-400 font-headline">COMMUNICATION</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Indonesian</span><span class="text-[12px] text-neutral-500 font-medium">Native Speaker</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">English</span><span class="text-[12px] text-neutral-500 font-medium">Upper-Int. (IELTS 5.5)</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">Academic Writing</span><span class="text-[12px] text-neutral-500 font-medium">Publication Grade</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center"><span class="font-headline font-semibold text-[15px] text-neutral-900">BISINDO Sign</span><span class="text-[12px] text-neutral-500 font-medium">Conversational</span></div>
-              <div class="p-5 rounded-2xl sm:rounded-[20px] bg-surface-subtle border border-neutral-200/50 flex justify-between items-center sm:col-span-2"><span class="font-headline font-semibold text-[15px] text-neutral-900">Public Speaking</span><span class="text-[12px] text-neutral-500 font-medium">Debate Finalist</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. CONTACT SECTION -->
-  <section class="w-full py-24 lg:py-32 bg-[#0D0E11] text-white border-t border-hairline-dark relative" id="contact">
-    <div class="max-w-container mx-auto px-6 sm:px-10">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        <div class="lg:col-span-5 space-y-8 scroll-reveal-item">
-          <div class="space-y-4">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-400 font-headline">Get in Touch</span>
-            <h2 class="font-headline text-3xl sm:text-5xl font-normal tracking-tight text-white leading-tight">
-              Connect for Research & AI Engineering
-            </h2>
-            <p class="text-[14px] sm:text-[15px] text-neutral-400 font-normal leading-relaxed">
-              Open to freelance UI/UX and app development work, and collaborative opportunities in assistive intelligence.
-            </p>
-          </div>
-          <div class="space-y-4 pt-2">
-            <div class="p-5 rounded-2xl bg-white/5 border border-hairline-dark space-y-1">
-              <div class="flex items-center gap-2 text-neutral-400">
-                <span class="material-symbols-outlined text-[16px]">mail</span>
-                <p class="text-[11px] font-semibold uppercase tracking-wider font-headline">Direct Email</p>
-              </div>
-              <a class="font-headline text-[15px] font-medium text-white hover:text-emerald-400 transition-colors pl-6 block focus-visible:ring-2 rounded-sm" href="mailto:dkiplikurniawan@gmail.com">
-                dkiplikurniawan@gmail.com
-              </a>
-            </div>
-            <div class="p-5 rounded-2xl bg-white/5 border border-hairline-dark space-y-1">
-              <div class="flex items-center gap-2 text-neutral-400">
-                <span class="material-symbols-outlined text-[16px]">chat</span>
-                <p class="text-[11px] font-semibold uppercase tracking-wider font-headline">WhatsApp / Mobile</p>
-              </div>
-              <p class="font-headline text-[15px] font-medium text-white pl-6">+62 823-6076-0559</p>
-            </div>
-            <div class="p-5 rounded-2xl bg-white/5 border border-hairline-dark space-y-1">
-              <div class="flex items-center gap-2 text-neutral-400">
-                <span class="material-symbols-outlined text-[16px]">location_on</span>
-                <p class="text-[11px] font-semibold uppercase tracking-wider font-headline">Location</p>
-              </div>
-              <p class="font-headline text-[15px] font-medium text-white pl-6">Medan, North Sumatra, Indonesia (UTC+7)</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-7 scroll-reveal-item" style="transition-delay: 150ms;">
-          <div class="p-8 sm:p-12 rounded-[36px] bg-dark-surface border border-hairline-dark shadow-2xl space-y-8 relative overflow-hidden" id="inquiry-card">
-            <div class="space-y-2 border-b border-hairline-dark pb-6">
-              <h3 class="font-headline text-2xl sm:text-3xl font-medium text-white">Send an Academic or Project Inquiry</h3>
-              <p class="text-[13px] text-neutral-400 font-normal">Inquiries are securely processed and routed via automated serverless API integration.</p>
-            </div>
-
-            <!-- Feedback Banner -->
-            <div class="banner-slide rounded-2xl border" id="inquiry-feedback-banner">
-              <div class="p-4 sm:p-5 flex items-start gap-3.5">
-                <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 mt-0.5" id="feedback-icon-box">
-                  <span class="material-symbols-outlined text-[18px]">check_circle</span>
-                </div>
-                <div class="space-y-1.5 flex-1">
-                  <div class="flex items-center justify-between">
-                    <h4 class="text-[14px] font-semibold text-white font-headline" id="feedback-title">Pesan Berhasil Terkirim!</h4>
-                    <button class="text-neutral-400 hover:text-white text-xs font-mono focus-visible:ring-2 rounded-sm p-1" onclick="dismissFeedbackBanner()" type="button">✕</button>
-                  </div>
-                  <p class="text-[12px] text-neutral-300 leading-relaxed" id="feedback-desc">Terima kasih. Pesan Anda telah dikirimkan langsung ke inbox <strong>dkiplikurniawan@gmail.com</strong>.</p>
-                  
-                  <div class="pt-2 flex flex-wrap items-center gap-3 hidden" id="feedback-fallback-actions">
-                    <a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium font-headline transition-colors focus-visible:ring-2" href="#" id="feedback-gmail-link" target="_blank">
-                      <span class="material-symbols-outlined text-[13px]">open_in_new</span>
-                      <span>Buka via Web Gmail</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <form class="space-y-6" id="inquiry-form" onsubmit="handleInquirySubmit(event)">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="floating-label-group pt-4">
-                  <input class="floating-input w-full bg-transparent border-0 border-b border-white/20 px-0 py-2.5 text-white text-[14px] placeholder-transparent focus:ring-0 focus:border-emerald-400 transition-all focus:outline-none" id="inquiry-name" placeholder="Full Name" required="" type="text"/>
-                  <label class="floating-label text-[11px] font-semibold tracking-wider uppercase font-headline" for="inquiry-name">Full Name</label>
-                </div>
-
-                <div class="floating-label-group pt-4">
-                  <input class="floating-input w-full bg-transparent border-0 border-b border-white/20 px-0 py-2.5 text-white text-[14px] placeholder-transparent focus:ring-0 focus:border-emerald-400 transition-all focus:outline-none" id="inquiry-email" placeholder="Email" required="" type="email"/>
-                  <label class="floating-label text-[11px] font-semibold tracking-wider uppercase font-headline" for="inquiry-email">Email Address</label>
-                </div>
-              </div>
-
-              <div class="space-y-1 pt-2">
-                <label class="text-[11px] font-semibold tracking-wider uppercase text-neutral-400 font-headline" for="inquiry-classification">Classification</label>
-                <select class="w-full bg-transparent border-0 border-b border-white/20 px-0 py-2.5 text-white text-[14px] focus:ring-0 focus:border-emerald-400 transition-colors [&>option]:bg-dark-surface [&>option]:text-white focus-visible:ring-2" id="inquiry-classification">
-                  <option value="Freelance UI/UX or App Development">Freelance UI/UX or App Development Inquiry</option>
-                  <option value="Research Collaboration">Research Collaboration Inquiry</option>
-                  <option value="General Academic Inquiry">General Academic Inquiry</option>
-                </select>
-              </div>
-
-              <div class="floating-label-group pt-4">
-                <textarea class="floating-input w-full bg-transparent border-0 border-b border-white/20 px-0 py-2.5 text-white text-[14px] placeholder-transparent focus:ring-0 focus:border-emerald-400 transition-all resize-none focus:outline-none" id="inquiry-message" placeholder="Message" required="" rows="3"></textarea>
-                <label class="floating-label text-[11px] font-semibold tracking-wider uppercase font-headline" for="inquiry-message">Message / Project Scope</label>
-              </div>
-
-              <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <span class="text-[11px] text-neutral-500 font-medium flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  Direct Delivery to dkiplikurniawan@gmail.com
-                </span>
-                
-                <button class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-neutral-950 font-semibold text-[13px] hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95 font-headline disabled:opacity-80 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2" id="inquiry-submit-btn" type="submit">
-                  <span class="inline-flex items-center" id="btn-icon-wrapper">
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-300" id="btn-plane-icon">send</span>
-                  </span>
-                  <span id="btn-text">Send Message</span>
-                  <span class="text-sm transition-transform duration-300" id="btn-arrow">↗</span>
-                </button>
-              </div>
-            </form>
-          </div>
+            <div id="form-status" role="status" aria-live="polite"></div>
+            <button id="inquiry-submit-btn" type="submit" class="send-btn" data-state="idle">
+              <span class="send-label">Send message</span>
+              <span class="send-plane" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 21 3l-6.5 18-3.2-7.3L3 11.5z"/><path d="m11.3 13.7 4.3-4.3"/></svg></span>
+              <span class="send-spinner" aria-hidden="true"></span>
+              <span class="send-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg></span>
+            </button>
+          </form>
         </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="w-full bg-[#08090A] border-t border-hairline-dark py-12 text-neutral-400 text-[13px]">
-  <div class="max-w-container mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-3">
-      <span class="w-7 h-7 rounded-full bg-white/10 border border-white/10 flex items-center justify-center font-headline text-xs font-semibold text-white">DK</span>
-      <span>© 2026 Dul Kipli Kurniawan, S.Kom. All rights reserved.</span>
-    </div>
-    <div class="flex items-center gap-7 text-[13px] font-headline">
-      <a class="hover:text-white transition-colors focus-visible:ring-2 rounded-sm" href="https://github.com/dkiplikurniawan" target="_blank">GitHub</a>
-      <a class="hover:text-white transition-colors focus-visible:ring-2 rounded-sm" href="#" target="_blank">LinkedIn</a>
-      <a class="hover:text-white transition-colors focus-visible:ring-2 rounded-sm" href="https://www.researchgate.net" target="_blank">ResearchGate</a>
-      <a class="hover:text-white transition-colors focus-visible:ring-2 rounded-sm" href="https://instagram.com/" target="_blank">Instagram</a>
+<footer class="site-footer">
+  <div class="max-w-container mx-auto px-5 sm:px-10">
+    <p class="footer-wordmark" aria-hidden="true">Dul Kipli Kurniawan</p>
+    <div class="footer-bar">
+      <p>© 2026 Dul Kipli Kurniawan, S.Kom</p>
+      <ul>
+        <li><a href="https://github.com/dkiplikurniawan" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/dul-kipli-kurniawan-b82345376" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://doi.org/10.30596/jppp.v3i2.10835" rel="noopener">Publication</a></li>
+        <li><a href="mailto:dkiplikurniawan@gmail.com">Email</a></li>
+      </ul>
     </div>
   </div>
 </footer>
-
 </body>
 </html>

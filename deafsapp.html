@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DEAFSAPP case study — Dul Kipli Kurniawan</title>
+<meta name="description" content="Case study of DEAFSAPP, a Flutter app for Indonesian Sign Language (BISINDO): problem, architecture, reported evaluation, evidence status, limitations and next steps."/>
+<link rel="canonical" href="https://dkiplikurniawan.github.io/portfolio/deafsapp.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="DEAFSAPP — BISINDO sign-language app case study"/>
+<meta property="og:description" content="Problem, architecture, reported results and honest limitations of a thesis-stage assistive app for Indonesian Sign Language."/>
+<meta property="og:url" content="https://dkiplikurniawan.github.io/portfolio/deafsapp.html"/>
+<meta property="og:image" content="https://dkiplikurniawan.github.io/portfolio/assets/og-image.png"/>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="assets/case-study.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap"><a href="index.html#deafsapp">← Back to portfolio</a><a href="https://github.com/dkiplikurniawan/DEAFSAPP-V1" rel="noopener">V1 source</a></div></header>
+
+<main id="main" class="wrap">
+<p class="eyebrow">Featured case study · Assistive technology</p>
+<h1>DEAFSAPP</h1>
+<p class="lede">A Flutter app for learning and communicating in Indonesian Sign Language (<abbr title="Bahasa Isyarat Indonesia">BISINDO</abbr>), developed as my undergraduate thesis with SLB Melati Aisyah in Medan.</p>
+
+<p class="note"><strong>How to read this page.</strong> Every component and number is tagged by the evidence behind it:
+<span class="tag tag-done">In public code</span> exists in the <a href="https://github.com/dkiplikurniawan/DEAFSAPP-V1" rel="noopener">DEAFSAPP-V1 repository</a>;
+<span class="tag tag-reported">Reported (thesis)</span> comes from the 2023 thesis-stage system, whose source code and evaluation data are no longer available;
+<span class="tag tag-placeholder">Placeholder</span> is a screen that exists in V1 but has no functionality yet.</p>
+
+<dl class="facts">
+  <div><dt>Context</dt><dd>Undergraduate thesis (Information Systems, UMSU) and community-service programme with SLB Melati Aisyah</dd></div>
+  <div><dt>Dates</dt><dd>2022 – 2023</dd></div>
+  <div><dt>My role</dt><dd>Lead software developer in a team project</dd></div>
+  <div><dt>Team</dt><dd>Student team; co-creators are listed on copyright registration EC00202341333</dd></div>
+  <div><dt>Status</dt><dd>Thesis research prototype. Public V1 code covers the app shell, speech-to-text and quiz; recognition and AR were not recovered.</dd></div>
+  <div><dt>Main technologies</dt><dd>Flutter, Dart, GetX, Rive, speech_to_text <span class="tag tag-done">In public code</span>; MediaPipe landmarks and a gesture classifier <span class="tag tag-reported">Reported (thesis)</span></dd></div>
+  <div><dt>Recognition</dt><dd>National Finalist, LIDM 2023, <span lang="id">Inovasi Teknologi Digital Pendidikan</span> division (Puspresnas, Kemendikbudristek)</dd></div>
+  <div><dt>Intellectual property</dt><dd>Registered copyright (Hak Cipta) No. EC00202341333, DJKI, 2023. This records authorship; it is not a patent or a technical validation.</dd></div>
+</dl>
+
+<h2 id="problem">1. Problem</h2>
+<p>At SLB Melati Aisyah, a special-needs school in Medan, Deaf and hard-of-hearing students communicate in BISINDO, while many hearing teachers, family members and peers are still learning it. The school had few practical BISINDO tools that run on an ordinary smartphone without extra hardware such as sensor gloves.</p>
+<p>DEAFSAPP set out to support two narrow tasks for this community:</p>
+<ul>
+  <li><strong>Learning:</strong> practise BISINDO vocabulary through lessons and quizzes.</li>
+  <li><strong>Assisted communication:</strong> recognise a limited set of signs from the camera and show them as text and speech, and show spoken words as text for Deaf users.</li>
+</ul>
+<p>It does not translate BISINDO in general and does not replace interpreters. The thesis system recognised a fixed vocabulary of isolated signs, which is a much smaller problem than understanding continuous, natural signing.</p>
+
+<h2 id="architecture">2. Architecture</h2>
+<p>The diagram separates what is in public code from what was reported for the thesis-stage system.</p>
+<ul class="legend" aria-label="Diagram legend">
+  <li><span class="tag tag-done">In public code</span> solid border</li>
+  <li><span class="tag tag-reported">Reported (thesis)</span> dashed border</li>
+  <li><span class="tag tag-placeholder">Placeholder</span> dotted border</li>
+</ul>
+
+<div class="flow-block">
+  <h3>A. Sign → text and speech</h3>
+  <ol class="flow">
+    <li class="s-reported"><strong>Phone camera</strong><span class="d">Video of the signer</span><span class="tag tag-reported">Reported (thesis)</span></li>
+    <li class="s-reported"><strong>Landmark extraction</strong><span class="d">MediaPipe hand and pose landmarks per frame</span><span class="tag tag-reported">Reported (thesis)</span></li>
+    <li class="s-reported"><strong>Sequence features</strong><span class="d">Landmarks over time for a dynamic sign</span><span class="tag tag-reported">Reported (thesis)</span></li>
+    <li class="s-reported"><strong>Gesture classifier</strong><span class="d">26 dynamic BISINDO signs</span><span class="tag tag-reported">Reported (thesis)</span></li>
+    <li class="s-reported"><strong>Output</strong><span class="d">Recognised word as text and synthesised speech</span><span class="tag tag-reported">Reported (thesis)</span></li>
+  </ol>
+</div>
+
+<div class="flow-block">
+  <h3>B. Speech → text → sign</h3>
+  <ol class="flow">
+    <li class="s-done"><strong>Microphone</strong><span class="d">Hearing person speaks</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-done"><strong>Speech-to-text</strong><span class="d"><code>speech_to_text</code> plugin using the device's speech service, dictation mode</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-done"><strong>Live transcript</strong><span class="d">GetX controller updates the screen as words arrive</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-reported"><strong>Sign visualisation</strong><span class="d">Words shown as signs via AR or hologram-style media</span><span class="tag tag-reported">Reported (thesis)</span> <span class="tag tag-placeholder">Placeholder in V1</span></li>
+  </ol>
+</div>
+
+<div class="flow-block">
+  <h3>C. App shell (V1)</h3>
+  <ol class="flow">
+    <li class="s-done"><strong>Onboarding</strong><span class="d">Rive-animated sign-in form (UI only, no back end)</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-done"><strong>Navigation</strong><span class="d">GetX routing, bindings and a five-tab animated bar</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-done"><strong>Quiz</strong><span class="d">Timer and scoring; questions from Open Trivia DB as placeholder content</span><span class="tag tag-done">In public code</span></li>
+    <li class="s-placeholder"><strong>Detection, AR, hologram screens</strong><span class="d">Empty screens awaiting a future rebuild</span><span class="tag tag-placeholder">Placeholder</span></li>
+  </ol>
+</div>
+
+<h3>Why these choices</h3>
+<ul>
+  <li><strong>Flutter</strong> gives one codebase for Android and iOS, matching the goal of running on ordinary smartphones without extra hardware.</li>
+  <li><strong>Landmarks instead of raw pixels:</strong> hand and pose landmarks reduce each frame to a small set of coordinates, which needs far less training data and computation than an image model. This is the general rationale for the approach; the thesis-stage implementation details could not be re-inspected.</li>
+  <li><strong>GetX</strong> keeps each feature (onboarding, speech, quiz) in its own module with a controller, binding and view.</li>
+</ul>
+
+<h2 id="data">3. Dataset and experimental design</h2>
+<p><span class="tag tag-reported">Reported (thesis)</span> The thesis-stage classifier covered <strong>26 dynamic BISINDO signs</strong>.</p>
+<p>The following details are <strong>not currently documented</strong> and are not claimed here:</p>
+<ul>
+  <li>how many recorded sequences there were per sign, and how many signers recorded them;</li>
+  <li>how the data was split into training and test sets, and whether the same signers appeared in both;</li>
+  <li>preprocessing (landmark normalisation, sequence length, augmentation) and the classifier architecture.</li>
+</ul>
+<p>These matter: if the same people appear in training and test data, accuracy measures how well the model recognises <em>those</em> signers, not new ones. Without the split, the reported figure cannot be read as signer-independent performance.</p>
+
+<h2 id="evaluation">4. Model evaluation</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+<caption>What the recognition result does and does not establish</caption>
+<thead><tr><th scope="col">Item</th><th scope="col">Status</th></tr></thead>
+<tbody>
+<tr><th scope="row">Reported result</th><td>76.1% recognition accuracy on 26 dynamic signs <span class="tag tag-reported">Reported (thesis)</span></td></tr>
+<tr><th scope="row">Metric definition</th><td>Accuracy (share of test sequences classified correctly), as reported</td></tr>
+<tr><th scope="row">Test-set size, split, signer independence</th><td>Not documented</td></tr>
+<tr><th scope="row">Per-class precision, recall, F1; confusion matrix</th><td>Not available — not shown, rather than estimated</td></tr>
+<tr><th scope="row">Baseline comparison</th><td>None documented. Chance level for 26 balanced classes is about 3.8%.</td></tr>
+</tbody></table></div>
+<h3>Experiments needed to make this result defensible</h3>
+<ol>
+  <li>Signer-independent evaluation: hold out entire signers (leave-one-signer-out) rather than random sequences.</li>
+  <li>Per-class precision, recall and F1 plus a confusion matrix, to find which signs are confused.</li>
+  <li>A simple baseline (e.g. nearest-neighbour on averaged landmarks) to show what the sequence model adds.</li>
+  <li>Robustness checks across lighting, backgrounds, distance and phone cameras.</li>
+</ol>
+
+<h2 id="usability">5. Usability evaluation</h2>
+<p><span class="tag tag-reported">Reported (thesis)</span> A field test at SLB Melati Aisyah with <strong>17 students and 8 teachers</strong> produced a usability score of <strong>76.5</strong>.</p>
+<p>The instrument still needs confirming from the thesis. If it was the System Usability Scale (SUS), 76.5 is a score out of 100 (not a percentage), which is above the commonly cited SUS average of 68. If it was the share of positive questionnaire responses, it should be reported as a percentage instead. Results from 25 participants at one school indicate acceptance in that setting; they do not generalise to all Deaf users.</p>
+
+<h2 id="privacy">6. Privacy and data flow</h2>
+<p>What can be verified from the public V1 code:</p>
+<ul>
+  <li><strong>No camera access</strong> in V1, so no video is captured or stored.</li>
+  <li><strong>Speech-to-text</strong> uses the device's built-in speech service through the <code>speech_to_text</code> plugin. Depending on the phone, that service may send audio to the platform provider (for example Google or Apple) for recognition. The app itself does not store transcripts.</li>
+  <li><strong>No back end or account storage.</strong> The sign-in form is UI only.</li>
+  <li><strong>One external request:</strong> the quiz fetches questions from <code>opentdb.com</code>.</li>
+</ul>
+<p>Whether the thesis-stage recognition ran fully on the device cannot be verified without its source, so this page makes no on-device or privacy-preserving claim for it. A rebuilt version should document its data flow explicitly.</p>
+
+<h2 id="demo">7. Demonstration</h2>
+<p>There is currently <strong>no public demo video or build</strong> of the thesis-stage system. To inspect what exists today:</p>
+<pre tabindex="0" aria-label="Commands to run DEAFSAPP V1"><code>git clone https://github.com/dkiplikurniawan/DEAFSAPP-V1.git
+cd DEAFSAPP-V1
+flutter pub get
+flutter run</code></pre>
+<p class="small">The V1 README lists required microphone permissions and which screens are placeholders.</p>
+
+<h2 id="limitations">8. Limitations</h2>
+<h3>Current limitations</h3>
+<ul>
+  <li><strong>Small vocabulary:</strong> 26 isolated signs; no continuous signing, grammar, or facial expressions, which carry meaning in BISINDO.</li>
+  <li><strong>Unverified generalisation:</strong> no documented signer-independent test; sensitivity to lighting, camera quality and hand position is untested.</li>
+  <li><strong>Lost artefacts:</strong> the recognition model, AR code and raw evaluation data were not preserved, so results cannot be re-run.</li>
+  <li><strong>Small, single-site usability sample</strong> (25 participants, one school); instrument to be confirmed.</li>
+  <li><strong>Uncertainty not shown to users:</strong> a low-confidence prediction is presented like a confident one.</li>
+</ul>
+<h3>Future work (proposed, not done)</h3>
+<ul>
+  <li>Rebuild recognition with a documented, versioned dataset and a signer-independent evaluation protocol.</li>
+  <li>Show confidence and let users correct wrong predictions.</li>
+  <li>Add BISINDO-specific lesson and quiz content, replacing the trivia placeholder.</li>
+  <li>Co-design and evaluate the next version with Deaf users and teachers, reporting the full instrument and results.</li>
+</ul>
+
+<h2 id="lessons">9. What this project taught me</h2>
+<ul>
+  <li>A headline accuracy number is only as useful as the documentation of how it was measured.</li>
+  <li>Code, models and evaluation data need version control from the start; losing them made the original results impossible to reproduce.</li>
+  <li>Accessibility work has to define its scope honestly: a fixed set of recognised signs is useful for learning, but it is not sign-language translation.</li>
+</ul>
+</main>
+<footer class="wrap small foot">© 2026 Dul Kipli Kurniawan · <a href="index.html#contact">Contact</a> · <a href="https://github.com/dkiplikurniawan" rel="noopener">GitHub</a></footer>
+</body>
+</html>

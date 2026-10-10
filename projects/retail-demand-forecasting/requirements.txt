@@ -1,0 +1,8 @@
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+statsmodels>=0.14
+matplotlib>=3.8
+pyreadr>=0.5
+# optional, for the notebook
+jupyter

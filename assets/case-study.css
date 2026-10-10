@@ -1,0 +1,83 @@
+/* Shared styles for case-study pages (deafsapp.html, projects/*). Plain CSS, no build step. */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap");
+
+:root {
+  --surface: #FBF9F5; --surface-2: #F5F3EF; --card: #fff;
+  --ink: #18181B; --ink-2: #3F3F46; --ink-3: #52525B; --line: #E4E4E7;
+  --done: #047857; --reported: #1D4ED8; --placeholder: #B45309;
+  --focus: #2563EB;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--surface); color: var(--ink); font: 16px/1.65 "Hanken Grotesk", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: "Outfit", system-ui, sans-serif; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; color: #09090B; }
+h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); margin: .3rem 0 1rem; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); margin: 3rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+h3 { font-size: 1.15rem; margin: 1.6rem 0 .5rem; }
+p, li { color: var(--ink-2); }
+a { color: #09090B; text-decoration: underline; text-underline-offset: 3px; }
+:where(a, button, summary):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+code { font-size: .9em; background: var(--surface-2); padding: .1em .35em; border-radius: 4px; }
+pre:focus-visible, .table-wrap:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+pre { background: #18181B; color: #F4F4F5; padding: 1rem 1.2rem; border-radius: 12px; overflow-x: auto; }
+pre code { background: none; color: inherit; padding: 0; }
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+@media (min-width: 640px) { .wrap { padding: 0 24px; } }
+.skip { position: absolute; left: 1rem; top: -4rem; background: #18181B; color: #fff; padding: .5rem 1rem; border-radius: 999px; z-index: 10; }
+.skip:focus { top: 1rem; }
+.topbar { position: sticky; top: 0; z-index: 5; background: rgba(251,249,245,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 3.5rem; font-size: 14px; }
+.topbar a { text-decoration: none; font-weight: 500; }
+main { padding: 2.5rem 0 4rem; }
+.eyebrow { font: 600 12px/1.4 "Outfit", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin: 0; }
+.lede { font-size: 1.2rem; color: var(--ink-2); max-width: 46rem; }
+.small { font-size: 14px; color: var(--ink-3); }
+.note { background: var(--surface-2); border-left: 3px solid var(--ink-3); padding: .9rem 1.1rem; border-radius: 0 10px 10px 0; }
+.foot { padding: 2rem 16px 3rem; border-top: 1px solid var(--line); }
+
+/* Facts list */
+.facts { display: grid; grid-template-columns: 1fr; gap: .6rem; margin: 1.5rem 0; padding: 0; }
+@media (min-width: 640px) { .facts { grid-template-columns: 1fr 1fr; } }
+.facts > div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: .8rem 1rem; }
+.facts dt { font: 600 12px/1.4 "Outfit", sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.facts dd { margin: .2rem 0 0; color: var(--ink); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; background: var(--card); }
+caption { text-align: left; font-weight: 600; padding: .5rem 0; color: var(--ink); }
+th, td { padding: .6rem .75rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+thead th { font-size: 13px; color: var(--ink-3); font-weight: 600; background: var(--surface-2); }
+tbody th { font-weight: 600; color: var(--ink); }
+td { font-variant-numeric: tabular-nums; }
+
+figure { margin: 1.5rem 0; }
+figure img { max-width: 100%; height: auto; display: block; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+figcaption { font-size: 14px; color: var(--ink-3); margin-top: .5rem; }
+
+/* Evidence tags: text + border style, never colour alone */
+.tag { display: inline-block; font: 600 11px/1.3 "Outfit", sans-serif; letter-spacing: .03em; padding: .15rem .5rem; border-radius: 999px; border: 1.5px solid currentColor; white-space: nowrap; }
+.tag-done { color: var(--done); }
+.tag-reported { color: var(--reported); border-style: dashed; }
+.tag-placeholder { color: var(--placeholder); border-style: dotted; }
+
+/* Flow diagram (HTML, so it reflows on small screens) */
+.flow-block { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1rem 1rem 1.2rem; margin: 1rem 0; }
+.flow-block h3 { margin-top: .2rem; }
+.flow { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.6rem; }
+.flow li { position: relative; padding: .7rem .85rem; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); }
+.flow li.s-done { border-color: var(--done); border-style: solid; }
+.flow li.s-reported { border-color: var(--reported); border-style: dashed; }
+.flow li.s-placeholder { border-color: var(--placeholder); border-style: dotted; }
+.flow li strong { display: block; color: var(--ink); font-size: 15px; }
+.flow li span.d { display: block; font-size: 13px; color: var(--ink-3); margin: .15rem 0 .35rem; }
+.flow li:not(:last-child)::after { content: "↓"; position: absolute; left: 50%; bottom: -1.45rem; transform: translateX(-50%); color: var(--ink-3); font-size: 1rem; line-height: 1; }
+@media (min-width: 840px) {
+  .flow { flex-direction: row; gap: 1.6rem; align-items: stretch; }
+  .flow li { flex: 1 1 0; min-width: 0; overflow-wrap: anywhere; }
+  .flow .tag { white-space: normal; }
+  .flow li:not(:last-child)::after { content: "→"; left: auto; right: -1.3rem; top: 50%; bottom: auto; transform: translateY(-50%); }
+}
+.legend { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; font-size: 14px; margin: .5rem 0 0; padding: 0; list-style: none; }

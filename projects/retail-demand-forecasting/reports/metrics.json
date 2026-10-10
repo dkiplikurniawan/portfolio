@@ -1,0 +1,141 @@
+{
+  "data": {
+    "rows": 64532,
+    "series": 152,
+    "first_month": "1982-04",
+    "last_month": "2018-12",
+    "leaf_series_total": 114,
+    "series_kept": 110,
+    "series_dropped": [
+      "Queensland | Liquor retailing",
+      "Queensland | Other specialised food retailing",
+      "Tasmania | Liquor retailing",
+      "Tasmania | Other specialised food retailing"
+    ],
+    "source_url": "https://raw.githubusercontent.com/tidyverts/tsibbledata/ccfcb321bb4f0e12b7287f5a8f752097e35a20a5/data/aus_retail.rda",
+    "sha256": "1826ec66b3d82edbde26c37d710f2fb5cf2c7044540f7f59c4480e1a987314cf",
+    "leaf_industries": [
+      "Supermarket and grocery stores",
+      "Liquor retailing",
+      "Other specialised food retailing",
+      "Furniture, floor coverings, houseware and textile goods retailing",
+      "Electrical and electronic goods retailing",
+      "Hardware, building and garden supplies retailing",
+      "Clothing retailing",
+      "Footwear and other personal accessory retailing",
+      "Department stores",
+      "Newspaper and book retailing",
+      "Other recreational goods retailing",
+      "Pharmaceutical, cosmetic and toiletry goods retailing",
+      "Other retailing n.e.c.",
+      "Cafes, restaurants and catering services",
+      "Takeaway food services"
+    ]
+  },
+  "eda": {
+    "figures": [
+      "reports/figures/eda_total.svg",
+      "reports/figures/eda_seasonality.svg",
+      "reports/figures/eda_industry_growth.svg"
+    ],
+    "peak_month": "Dec",
+    "peak_month_effect_pct": 29.1,
+    "lowest_month": "Feb",
+    "lowest_month_effect_pct": -11.5,
+    "fastest_industry": "Cafes, restaurants and catering services",
+    "fastest_cagr_pct": 6.9,
+    "slowest_industry": "Newspaper and book retailing",
+    "slowest_cagr_pct": -2.5,
+    "cagr_table": {
+      "Newspaper and book retailing": -2.52,
+      "Department stores": 1.22,
+      "Other specialised food retailing": 1.54,
+      "Footwear and other personal accessory retailing": 2.56,
+      "Other recreational goods retailing": 3.03,
+      "Electrical and electronic goods retailing": 3.04,
+      "Furniture, floor coverings, houseware and textile goods retailing": 3.35,
+      "Clothing retailing": 4.12,
+      "Hardware, building and garden supplies retailing": 4.28,
+      "Takeaway food services": 5.42,
+      "Supermarket and grocery stores": 5.42,
+      "Other retailing n.e.c.": 5.74,
+      "Liquor retailing": 5.92,
+      "Pharmaceutical, cosmetic and toiletry goods retailing": 6.48,
+      "Cafes, restaurants and catering services": 6.85
+    }
+  },
+  "origins": [
+    "2015-12",
+    "2016-12",
+    "2017-12"
+  ],
+  "n_forecasts": 3960,
+  "summary": [
+    {
+      "model": "Seasonal naive",
+      "mean_MASE": 1.2122,
+      "median_MASE": 1.0129,
+      "median_MAPE_pct": 5.7618,
+      "share_beating_baseline_pct": null
+    },
+    {
+      "model": "ETS",
+      "mean_MASE": 1.0578,
+      "median_MASE": 0.893,
+      "median_MAPE_pct": 4.8405,
+      "share_beating_baseline_pct": 62.4242
+    },
+    {
+      "model": "Global GBM",
+      "mean_MASE": 1.1188,
+      "median_MASE": 0.9637,
+      "median_MAPE_pct": 5.0755,
+      "share_beating_baseline_pct": 57.5758
+    }
+  ],
+  "mase_by_test_year": {
+    "2016": {
+      "Seasonal naive": 1.3475,
+      "ETS": 1.1346,
+      "Global GBM": 1.172
+    },
+    "2017": {
+      "Seasonal naive": 1.1261,
+      "ETS": 1.0195,
+      "Global GBM": 1.1612
+    },
+    "2018": {
+      "Seasonal naive": 1.1629,
+      "ETS": 1.0191,
+      "Global GBM": 1.0233
+    }
+  },
+  "buffer_scenario": {
+    "model": "ETS",
+    "interpretation": "At a 90% target the buffer covered 82.4% of 2018 series-months (below target by 7.6 points). The gap shows that buffers sized from two years of errors do not transfer reliably to the next year.",
+    "rows": [
+      {
+        "target_coverage_pct": 80.0,
+        "realised_coverage_2018_pct": 76.36,
+        "median_buffer_pct_of_forecast": 4.07
+      },
+      {
+        "target_coverage_pct": 90.0,
+        "realised_coverage_2018_pct": 82.42,
+        "median_buffer_pct_of_forecast": 5.99
+      },
+      {
+        "target_coverage_pct": 95.0,
+        "realised_coverage_2018_pct": 87.65,
+        "median_buffer_pct_of_forecast": 8.04
+      }
+    ]
+  },
+  "figures": [
+    "reports/figures/eda_total.svg",
+    "reports/figures/eda_seasonality.svg",
+    "reports/figures/eda_industry_growth.svg",
+    "reports/figures/forecast_example.svg",
+    "reports/figures/mase_by_year.svg"
+  ]
+}
