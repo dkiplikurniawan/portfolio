@@ -100,6 +100,7 @@ flowchart LR
 | # | Project | What it is | Status | Links |
 |---|---|---|---|---|
 | ★ | **DEAFSAPP** | Flutter app for BISINDO learning and communication, with gesture recognition and speech-to-text | Research prototype (thesis, 2022–2023) | [Case study](https://dkiplikurniawan.github.io/portfolio/deafsapp.html) · [V1 code](https://github.com/dkiplikurniawan/DEAFSAPP-V1) |
+| ★ | **CALMQUEST: The Lost Light** | Open-world 2D cozy game for unwinding after work (Godot 4), with an explainable rule-based comfort engine, consent-gated on-device research data and 1,437 automated tests and checks | Development complete (v0.4.0); human evaluation planned | [Project](https://dkiplikurniawan.github.io/portfolio/#calmquest) · [Report (PDF)](assets/CALMQUEST_Project_Report.pdf) |
 | 1.0 | **Retail Demand Forecasting & Planning Buffers** | 12-month forecasts for 110 Australian retail series (ABS, 1982–2018). ETS cut mean MASE from 1.21 to 1.06 against a seasonal-naive baseline; error-based buffers covered 82% of months against a 90% target | Completed first version | [Results](https://dkiplikurniawan.github.io/portfolio/projects/retail-demand-forecasting/) · [Code](projects/retail-demand-forecasting) |
 | 2.0 | **VOLDO** *(formerly SUCARE)* | Volunteer and social-impact app: 80+ Figma screens for three roles plus an admin panel | Design in progress | [Screens](https://dkiplikurniawan.github.io/portfolio/#voldo) |
 | 3.0 | **SPASI** *(formerly RUANGI·JO)* | Café-based productivity and community platform: brand identity, mobile UI and a product blueprint with MoSCoW requirements | Conceptual case study | [Portfolio](https://dkiplikurniawan.github.io/portfolio/#work) |
@@ -108,12 +109,13 @@ flowchart LR
 ### Portfolio at a glance
 
 ```mermaid
-%%{init: {"theme": "base", "themeVariables": {"pie1": "#047857", "pie2": "#D97706", "pie3": "#52525B", "pieSectionTextColor": "#FFFFFF", "pieTitleTextColor": "#8B8B94", "pieLegendTextColor": "#8B8B94", "pieStrokeColor": "#FFFFFF", "pieOuterStrokeColor": "#A1A1AA"}}}%%
+%%{init: {"theme": "base", "themeVariables": {"pie1": "#047857", "pie2": "#D97706", "pie3": "#52525B", "pie4": "#5B2A86", "pieSectionTextColor": "#FFFFFF", "pieTitleTextColor": "#8B8B94", "pieLegendTextColor": "#8B8B94", "pieStrokeColor": "#FFFFFF", "pieOuterStrokeColor": "#A1A1AA"}}}%%
 pie showData
-    title Projects by focus area (5 projects)
+    title Projects by focus area (6 projects)
     "UI/UX & product design" : 3
     "AI & computer vision" : 1
     "Data science" : 1
+    "Game dev & HCI research" : 1
 ```
 
 ```mermaid
@@ -131,7 +133,7 @@ pie showData
 
 | Area | Tools |
 |---|---|
-| **Software engineering** | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) ![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white) |
+| **Software engineering** | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) ![Godot](https://img.shields.io/badge/Godot%204-478CBF?logo=godotengine&logoColor=white) ![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white) |
 | **AI & data** | ![MediaPipe](https://img.shields.io/badge/MediaPipe-0097A7?logo=google&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white) ![statsmodels](https://img.shields.io/badge/statsmodels-4051B5) ![PyTorch](https://img.shields.io/badge/PyTorch-coursework-EE4C2C?logo=pytorch&logoColor=white) ![Keras](https://img.shields.io/badge/Keras-coursework-D00000?logo=keras&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain%20%26%20RAG-coursework-1C3C3C?logo=langchain&logoColor=white) |
 | **Design** | ![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white) ![Blender](https://img.shields.io/badge/Blender-E87D0D?logo=blender&logoColor=white) User research · Usability testing · PRD & MoSCoW · WCAG-informed design |
 
@@ -156,6 +158,7 @@ timeline
     2026 : IBM AI Engineering and IBM Data Science certificates
          : Kaggle Computer Vision and Intermediate ML
          : Retail forecasting project and VOLDO design
+         : CALMQUEST v0.4.0, a research-ready cozy game
 ```
 
 ---
@@ -198,13 +201,14 @@ This repository is the source of the portfolio site, published with GitHub Pages
 
 | Path | What it is |
 |---|---|
-| `index.html` | Home page (hero, about, DEAFSAPP, VOLDO, work, experience, skills, contact) |
+| `index.html` | Home page (hero, about, DEAFSAPP, CALMQUEST, VOLDO, work, experience, skills, contact) |
 | `deafsapp.html` | DEAFSAPP case study with evidence-tagged architecture and evaluation audit |
 | `projects/retail-demand-forecasting/` | Data science project: code, notebook, README, generated results page |
 | `style.css` | Design tokens and the styles Tailwind utilities don't cover |
 | `script.js` | Motion system, navigation, skills tabs, contact form |
 | `assets/case-study.css` | Shared plain-CSS styles for case-study pages |
 | `assets/` | CV, certificates, images, favicon, social-sharing image |
+| `assets/calmquest/` | CALMQUEST screenshots (720 × 576 WebP, cropped from the project report); report PDF in `assets/CALMQUEST_Project_Report.pdf` |
 | `404.html`, `sitemap.xml` | Not-found page and sitemap |
 
 No build step: the home page uses the Tailwind Play CDN, and case-study pages use plain CSS.
@@ -243,6 +247,8 @@ Layout and scroll feel are modelled on editorial sites such as Lenval Properties
 | Number reels roll from 0 to the value | `.odo[data-count]` | `initOdometers()` |
 | Fade-up blocks (staggered, once) | `data-fade` | `initTextReveals()` |
 | DEAFSAPP stages and a field-photo stack that wipes up as you read (Bright Avenue-inspired); carousel on phones | `#pipeline .stage[data-stage]`, `[data-gallery] .g-slide` | `initPipeline()` |
+| CALMQUEST polaroid wall (Paragon-inspired): sticky headline, scattered polaroids scroll over it with parallax drift; velocity marquee; data bars and roadmap line | `#calmquest`, `[data-marquee]`, `.polaroid`, `[data-bars]`, `[data-road]` | `initCalmquest()` |
+| CALMQUEST comfort-engine demo: 0–10 check-in highlights the suggested mode in the rule table (works without GSAP) | `[data-comfort]` | `initComfortDemo()` |
 | VOLDO 3D phones fan out, pointer tilt | `data-phones` | `initPhones()` |
 | Image preview following the cursor on work rows | `.work-row[data-preview]` | `initWorkPreview()` |
 | Magnetic primary buttons (max 6 px) | `data-magnetic` | `initMagnetic()` |

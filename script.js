@@ -491,20 +491,123 @@ function initContactForm() {
   });
 }
 
+/* ======================================================================== CALMQUEST (Paragon-style polaroid wall) */
+// Layout is pure CSS: a sticky headline with polaroids scrolling over it. Motion adds the headline reveal,
+// a marquee that speeds up and turns with scroll velocity, parallax drift per polaroid, and the data bars.
+function initCalmquest() {
+  const root = $('#calmquest');
+  if (!root) return;
+
+  const title = $('[data-cq-title]', root);
+  const reveal = { trigger: '.cq-gallery', start: 'top 75%', once: true };
+  if (title && window.SplitText) {
+    SplitText.create(title, {
+      type: 'lines,chars', mask: 'lines', linesClass: 'split-line', autoSplit: true,
+      onSplit: (self) => gsap.from(self.chars, { yPercent: 115, duration: 1.1, ease: 'expo.out', stagger: 0.03, scrollTrigger: reveal }),
+    });
+  }
+  gsap.from($$('.cq-kicker, .cq-sub', root), { y: 18, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.1, delay: 0.3, scrollTrigger: reveal });
+
+  // Marquee: drifts left, rushes with fast scrolling and flips direction when scrolling up.
+  const mq = $('[data-marquee]', root);
+  const track = mq && $('.cq-marquee-track', mq);
+  if (track) {
+    mq.classList.add('is-driven');
+    let x = 0, dir = -1, boost = 0, half = 0, visible = false;
+    const measure = () => { half = track.scrollWidth / 2; };
+    measure();
+    window.addEventListener('resize', measure, { passive: true });
+    document.fonts?.ready.then(measure);
+    ScrollTrigger.create({
+      trigger: mq, start: 'top bottom', end: 'bottom top',
+      onToggle: (self) => { visible = self.isActive; },
+      onUpdate: (self) => { const v = self.getVelocity(); if (v) dir = v > 0 ? -1 : 1; boost = Math.min(Math.abs(v) / 110, 16); },
+    });
+    gsap.ticker.add((time, delta) => {
+      if (!visible || !half) return;
+      boost *= 0.93;
+      x = gsap.utils.wrap(-half, 0, x + dir * (1 + boost) * (delta / 16.67));
+      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+    });
+  }
+
+  // Each polaroid drifts at its own speed and twists slightly as it passes the headline.
+  const speeds = [45, -20, 75, 15, 90, -10, 55, 30, 70];
+  const mobile = window.matchMedia('(max-width: 767px)').matches;
+  $$('.polaroid', root).forEach((card, i) => {
+    const s = speeds[i % speeds.length] * (mobile ? 0.45 : 1);
+    gsap.fromTo(card, { y: s, rotation: 0 }, { y: -s, rotation: i % 2 ? -3 : 3, ease: 'none', scrollTrigger: { trigger: card.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
+  });
+
+  const bars = $('[data-bars]', root);
+  if (bars) gsap.from($$('.cq-bar span', bars), { scaleX: 0, duration: 1.4, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: bars, start: 'top 85%', once: true } });
+  const power = $('.cq-power', root);
+  if (power) gsap.from($$('.cq-meter span', power), { scaleX: 0, duration: 1.6, ease: 'expo.out', stagger: 0.15, scrollTrigger: { trigger: power, start: 'top 88%', once: true } });
+
+  const road = $('[data-road]', root);
+  if (road) {
+    road.style.setProperty('--road', 0);
+    ScrollTrigger.create({ trigger: road, start: 'top 85%', end: 'top 30%', scrub: true, onUpdate: (self) => road.style.setProperty('--road', self.progress.toFixed(3)) });
+  }
+}
+
+/* ======================================================================== CALMQUEST comfort engine demo (no GSAP needed) */
+// Mirrors the documented rules: 7–10 → Gentle, 4–6 → Balanced, 0–3 → ask Balanced or Playful, skipped → Balanced.
+// The player's own choice always wins. Strings are constants, never user input.
+function initComfortDemo() {
+  const root = $('[data-comfort]');
+  if (!root) return;
+  const ui = $('[data-comfort-ui]', root);
+  const range = $('#cq-stress', root);
+  const out = $('#cq-stress-out', root);
+  const msg = $('#cq-suggest', root);
+  const table = $('.cq-params', root);
+  const modeBtns = $$('button[data-mode]', ui);
+  const skip = $('[data-skip]', ui);
+  const NAMES = { gentle: 'Gentle', balanced: 'Balanced', playful: 'Playful' };
+  let skipped = false;
+  let chosen = null;
+  ui.hidden = false;
+
+  const suggest = (v) => {
+    if (skipped) return { mode: 'balanced', text: '<strong>Skipped → Balanced.</strong> Every mode stays selectable.' };
+    if (v >= 7) return { mode: 'gentle', text: '<strong>7–10 → suggests Gentle:</strong> slower, wider reach, guiding glow on.' };
+    if (v >= 4) return { mode: 'balanced', text: '<strong>4–6 → suggests Balanced:</strong> the default experience.' };
+    return { mode: 'balanced', offer: 'playful', text: '<strong>0–3 → asks: Balanced or Playful?</strong> Balanced is pre-selected, never assumed.' };
+  };
+  const render = () => {
+    const s = suggest(+range.value);
+    const mode = chosen || s.mode;
+    out.value = range.value;
+    table.dataset.mode = mode;
+    ui.classList.toggle('is-skipped', skipped);
+    skip.setAttribute('aria-pressed', String(skipped));
+    modeBtns.forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+      b.classList.toggle('is-suggested', b.dataset.mode === s.mode || b.dataset.mode === s.offer);
+    });
+    msg.innerHTML = s.text + (chosen && chosen !== s.mode ? ` You chose <strong>${NAMES[chosen]}</strong>: the player decides, and all progress is kept.` : '');
+  };
+  range.addEventListener('input', () => { skipped = false; chosen = null; render(); });
+  skip.addEventListener('click', () => { skipped = !skipped; chosen = null; render(); });
+  modeBtns.forEach((b) => b.addEventListener('click', () => { chosen = b.dataset.mode; render(); }));
+  render();
+}
+
 /* ======================================================================== boot */
 function run(fns) {
   for (const fn of fns) {
     try { fn(); } catch (err) {
       console.warn(`[portfolio] ${fn.name} failed:`, err);
       document.documentElement.classList.add('no-motion');
-      if (Motion.gsap) gsap.set('[data-hero], [data-fade], .scrub-word, .split-line, .phone', { clearProps: 'all' });
+      if (Motion.gsap) gsap.set('[data-hero], [data-fade], .scrub-word, .split-line, .split-line *, .phone, .polaroid, .cq-kicker, .cq-sub', { clearProps: 'all' });
     }
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   window.__motionReady = true;
-  run([initMobileMenu, initTabs, initContactForm]);
+  run([initMobileMenu, initTabs, initContactForm, initComfortDemo]);
 
   if (!Motion.full) {
     document.documentElement.classList.add('no-motion');
@@ -516,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger, ...(window.SplitText ? [SplitText] : []));
   run([initSmoothScroll, initAnchors, initHeader, initPipeline]);
   const animate = () => {
-    run([initIntro, initTextReveals, initAboutPhoto, initOdometers, initPhones, initWorkPreview, initTimeline, initMagnetic]);
+    run([initIntro, initTextReveals, initAboutPhoto, initOdometers, initPhones, initCalmquest, initWorkPreview, initTimeline, initMagnetic]);
     if (location.hash) { const t = $(location.hash); if (t) { revealWithin(t); requestAnimationFrame(() => (lenis ? lenis.scrollTo(t, { immediate: true }) : t.scrollIntoView())); } }
     window.addEventListener('load', () => ScrollTrigger.refresh());
   };
